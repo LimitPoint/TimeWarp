@@ -105,12 +105,11 @@ func testScaleVideo(scaleType:ScaleFunctionTestType) {
         return value!
     } 
     
-    let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
     let fm = FileManager.default
     let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     
-    let destinationPath = docsurl.appendingPathComponent("test.mov").path
-    let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in 1}, progress: { p, _ in
+    let destinationPath = docsurl.appendingPathComponent(filename).path
+    let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: integrator, progress: { p, _ in
         print("p = \(p)")
     }, completion: { result, error in
         print("result = \(String(describing: result))")
