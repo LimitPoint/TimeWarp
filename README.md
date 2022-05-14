@@ -69,7 +69,7 @@ let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 
 Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. 
 
-Here is an explicit sample with the scaling function s(t) = t, and kDefaultURL pointing to a video bundle resource. Since sqrt(t) is the integral of 
+Here is an explicit sample with the scaling function s(t) = t, and kDefaultURL pointing to a video bundle resource.
 
 The output is a video whose rate of play slowly increases:
 
