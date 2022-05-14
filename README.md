@@ -54,7 +54,7 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - The variable time scaling function.
+4. **integrator: Closure** - The time scaling function whose derivitive is the instantaneous time scale factor. 
 
 5. **progress: Closures** - A handler that is periodically executed to send progress images and values.
 
@@ -69,9 +69,7 @@ let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 
 Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. 
 
-Here is an explicit sample with the scaling function s(t) = t, and kDefaultURL pointing to a video bundle resource.
-
-The output is a video whose rate of play slowly increases:
+Here is an explicit sample with the scaling function s(t) = t/2, and kDefaultURL pointing to a video bundle resource. The derivitive of s(t) is s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate:
 
 ```swift
 let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
@@ -79,7 +77,7 @@ let fm = FileManager.default
 let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
 let destinationPath = docsurl.appendingPathComponent("test.mov").path
-let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t}, progress: { p, _ in
+let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t/2}, progress: { p, _ in
     print("p = \(p)")
 }, completion: { result, error in
     print("result = \(String(describing: result))")
