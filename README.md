@@ -2,7 +2,13 @@
 # ScaleVideo.swift
 ## Variably scales video in time domain
 
-Learn more about uniformly scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived.
+This project implements a method that *variably* scales video and audio. 
+
+Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the instantaneous time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration.
+
+In this way the absolute time scale at any particular time `t` is the sum of all local time scaling up to that time, or the definite integral of the instantaneous scaling function from `0` to `t`.
+
+Learn more about *uniformly* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived. 
 
 The associated Xcode project implements a [SwiftUI] app for macOS and iOS that variably scales video files stored on your device or iCloud. 
 
@@ -10,7 +16,7 @@ A default video file is provided to set the initial state of the app.
 
 After a video is imported it is displayed in the [VideoPlayer] where it can be viewed, along with its variably scaled counterpart.
 
-Select the scaling curve and its parameters using sliders and popup menu.
+Select the scaling type and its parameters using sliders and popup menu.
 
 ## Classes
 
@@ -54,30 +60,36 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - The variable scale factor function - that is often provided as a definite intergral, but need not be (see example below). 
+4. **integrator: Closure** - A function defined on the unit interval [0,1] whose *derivitive* is interpreted as the instantaneous time scale factor. Thus it can more naturally be provided as the definite integral of that derivitive, or summation of all local scaling up to that time.  
 
-5. **progres: Closures** - A handler that is periodically executed to send progress images and values.
+5. **progress: Closures** - A handler that is periodically executed to send progress images and values.
 
 6. **completion: Closure** - A handler that is executed when the operation has completed to send a message of success or not.
 
-Example usage is provided in the code. Look in ScaleVideoApp.swift and uncomment the code in `init()`:
+Example usage is provided in the code. 
+
+In ScaleVideoApp.swift try uncommenting the code in `init()`:
 
 ```swift
 // iterate all tests:
 let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 ```
 
-If you run the app on the Mac then navigate to the apps Documents folder, using 'Go to Folder...' from the Finder's 'Go' menu, to find the generated samples to play. 
+That series of examples makes use of integration of the instantaeous scaling function for the integrator.
 
-Here is an explicit sample with the scaling function s(t) = sqrt(t), and kDefaultURL pointing to a video bundle resource. The output is a video whose rate of play slowly increases:
+Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. 
+
+Here is another example with the integrator set to s(t) = t/2, and kDefaultURL pointing to a video bundle resource. 
+
+The derivitive of s(t) is s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate:
 
 ```swift
 let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
 let fm = FileManager.default
 let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-let destinationPath = docsurl.appendingPathComponent("test.mov").path
-let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in sqrt(t)}, progress: { p, _ in
+let destinationPath = docsurl.appendingPathComponent("2x.mov").path
+let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t/2}, progress: { p, _ in
     print("p = \(p)")
 }, completion: { result, error in
     print("result = \(String(describing: result))")
@@ -85,6 +97,12 @@ let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: 
 
 scaleVideo?.start()
 ```
+Other examples include:
+
+s(t) = 2 * t, then s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
+
+s(t) = t * t/2, then s'(t) = t, time is locally scaled at a variable rate from 0 to 1, and the video rate varies from fast to normal play.
+
 
 [App]: https://developer.apple.com/documentation/swiftui/app
 [ObservableObject]: https://developer.apple.com/documentation/combine/observableobject
