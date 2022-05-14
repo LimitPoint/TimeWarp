@@ -101,7 +101,7 @@ Other examples include:
 
 s(t) = 2 * t, then s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
 
-s(t) = t * t/2, then s'(t) = t, time is locally scaled at a variable rate from 0 to 1, and the video rate varies from fast to normal play.
+s(t) = t * t/2, then s'(t) = t, time is locally scaled at a variable rate `t` from 0 to 1, and the video rate varies from fast to normal play.
 
 
 [App]: https://developer.apple.com/documentation/swiftui/app
