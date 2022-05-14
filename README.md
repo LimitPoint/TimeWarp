@@ -1,5 +1,5 @@
 ![TimeWarp](http://www.limit-point.com/assets/images/TimeWarp.jpg)
-# ScaleVideo.swift
+# TimeWarp
 ## Variably scales video in time domain
 
 This project implements a method that *variably* scales video and audio. 
