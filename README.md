@@ -54,7 +54,7 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - The time scaling function whose derivitive is the instantaneous time scale factor. 
+4. **integrator: Closure** - A time scaling function defined on the unit interval [0,1], whose derivitive is the instantaneous time scale factor. 
 
 5. **progress: Closures** - A handler that is periodically executed to send progress images and values.
 
@@ -73,7 +73,7 @@ Run the app on the Mac and navigate to the apps Documents folder using 'Go to Fo
 
 Here is another example with the scaling function s(t) = t/2, and kDefaultURL pointing to a video bundle resource. 
 
-The derivitive of s(t) is s'(t) = 1/2 so time is scaled locally halved, uniformly, and the resulting video plays uniformly at 2x the normal rate:
+The derivitive of s(t) is s'(t) = 1/2 so time is scaled locally halved uniformly, and the resulting video plays uniformly at 2x the normal rate:
 
 ```swift
 let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
@@ -91,9 +91,10 @@ scaleVideo?.start()
 ```
 Other examples:
 
-If s(t) = 2 * t, s'(t) = 2, time is locally doubled, uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
+If s(t) = 2 * t, then s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
 
-If s(t) = t * t/2, s'(t) = t, time is locally scaled at a variable rate from 0 to 1, and the video stats plays fast at the start and normal speed at the end.
+If s(t) = t * t/2, s'(t) = t, time is locally scaled at a variable rate from 0 to 1, and the video rate varies from fast to normal play.
+
 
 [App]: https://developer.apple.com/documentation/swiftui/app
 [ObservableObject]: https://developer.apple.com/documentation/combine/observableobject
