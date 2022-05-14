@@ -4,6 +4,10 @@
 
 This project implements a method that *variably* scales video and audio. 
 
+Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the instantaneous time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration.
+
+In this way the absolute time scale at any particular time `t` is the sum of all local time scaling up to that time, or the definite integral of the scaling function from `0` to `t`.
+
 Learn more about *uniformly* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived. 
 
 The associated Xcode project implements a [SwiftUI] app for macOS and iOS that variably scales video files stored on your device or iCloud. 
