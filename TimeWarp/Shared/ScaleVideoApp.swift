@@ -105,11 +105,12 @@ func testScaleVideo(scaleType:ScaleFunctionTestType) {
         return value!
     } 
     
+    let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
     let fm = FileManager.default
     let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     
-    let destinationPath = docsurl.appendingPathComponent(filename).path
-    let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: integrator, progress: { p, _ in
+    let destinationPath = docsurl.appendingPathComponent("test.mov").path
+    let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in 1}, progress: { p, _ in
         print("p = \(p)")
     }, completion: { result, error in
         print("result = \(String(describing: result))")
@@ -142,6 +143,54 @@ struct ScaleVideoApp: App {
          testScaleVideo(scaleType: .linear)
          testScaleVideo(scaleType: .half)
          testScaleVideo(scaleType: .double)
+         */
+        
+        // s(t) = t/2, rate of play doubled
+        /*
+        let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
+        let fm = FileManager.default
+        let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+        
+        let destinationPath = docsurl.appendingPathComponent("2x.mov").path
+        let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t/2}, progress: { p, _ in
+            print("p = \(p)")
+        }, completion: { result, error in
+            print("result = \(String(describing: result))")
+        })
+        
+        scaleVideo?.start()
+         */
+        
+        // s(t) = 2 * t, rate of play doubled
+        /*
+         let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
+         let fm = FileManager.default
+         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+         
+         let destinationPath = docsurl.appendingPathComponent("0.5x.mov").path
+         let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in 2 * t}, progress: { p, _ in
+         print("p = \(p)")
+         }, completion: { result, error in
+         print("result = \(String(describing: result))")
+         })
+         
+         scaleVideo?.start()
+         */
+        
+        // s(t) = t * t/2, plays with variable rate from fast to normal
+        /*
+         let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
+         let fm = FileManager.default
+         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+         
+         let destinationPath = docsurl.appendingPathComponent("variable.mov").path
+        let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t * t/2}, progress: { p, _ in
+         print("p = \(p)")
+         }, completion: { result, error in
+         print("result = \(String(describing: result))")
+         })
+         
+         scaleVideo?.start()
          */
     }
     
