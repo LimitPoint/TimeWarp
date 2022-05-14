@@ -60,7 +60,7 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - A function defined on the unit interval [0,1] whose *derivitive* is interpreted as the instantaneous time scale factor. Thus it can more naturally be provided as the definite integral of that derivitive, or summation of all local scaling up to that time.  
+4. **integrator: Closure** - A function defined on the unit interval [0,1] whose *derivative* is interpreted as the instantaneous time scale factor. Thus it can more naturally be provided as the definite integral of that derivative, or summation of all local scaling up to that time.  
 
 5. **progress: Closures** - A handler that is periodically executed to send progress images and values.
 
@@ -75,13 +75,13 @@ In ScaleVideoApp.swift try uncommenting the code in `init()`:
 let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 ```
 
-That series of examples makes use of integration of the instantaeous scaling function for the integrator.
+That series of examples makes use of integration of the instantaneous scaling function for the integrator.
 
 Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. (Use the path to the generated videos that appear in the Xcode log view.)
 
 Here is another example with the integrator set to s(t) = t/2, and kDefaultURL pointing to a video bundle resource. 
 
-The derivitive of s(t) is s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate:
+The derivative of s(t) is s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate:
 
 ```swift
 let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
