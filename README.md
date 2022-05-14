@@ -10,7 +10,7 @@ A default video file is provided to set the initial state of the app.
 
 After a video is imported it is displayed in the [VideoPlayer] where it can be viewed, along with its variably scaled counterpart.
 
-Select the scaling curve and its parameters using sliders and popup menu.
+Select the scaling type and its parameters using sliders and popup menu.
 
 ## Classes
 
@@ -54,11 +54,13 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - The variable scale factor function - that is often provided as a definite intergral, but need not be (see example below). 
+4. **integrator: Closure** - The variable time scaling function, often provided as a definite integral, whose value specifies the scale factor at that time. 
 
 5. **progres: Closures** - A handler that is periodically executed to send progress images and values.
 
 6. **completion: Closure** - A handler that is executed when the operation has completed to send a message of success or not.
+
+The integrator need not be a definite intergral. When it is a definite intergral the interpretation is that the integrand specifies the instantaeous scale factor at every time in the video to be scaled. 
 
 Example usage is provided in the code. Look in ScaleVideoApp.swift and uncomment the code in `init()`:
 
@@ -67,9 +69,11 @@ Example usage is provided in the code. Look in ScaleVideoApp.swift and uncomment
 let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 ```
 
-If you run the app on the Mac then navigate to the apps Documents folder, using 'Go to Folder...' from the Finder's 'Go' menu, to find the generated samples to play. 
+Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated variably scaled video samples. 
 
-Here is an explicit sample with the scaling function s(t) = sqrt(t), and kDefaultURL pointing to a video bundle resource. The output is a video whose rate of play slowly increases:
+Here is an explicit sample with the scaling function s(t) = sqrt(t), and kDefaultURL pointing to a video bundle resource. 
+
+The output is a video whose rate of play slowly increases:
 
 ```swift
 let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
