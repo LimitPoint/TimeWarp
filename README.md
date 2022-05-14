@@ -77,7 +77,7 @@ let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 
 That series of examples makes use of integration of the instantaeous scaling function for the integrator.
 
-Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. 
+Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. (Use the path to the generated videos that appear in the Xcode log view.)
 
 Here is another example with the integrator set to s(t) = t/2, and kDefaultURL pointing to a video bundle resource. 
 
