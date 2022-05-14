@@ -54,7 +54,7 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - The variable time scaling function whose value specifies the 
+4. **integrator: Closure** - The variable time scaling function.
 
 5. **progress: Closures** - A handler that is periodically executed to send progress images and values.
 
