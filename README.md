@@ -54,13 +54,11 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - The variable time scaling function, often provided as a definite integral, whose value specifies the scale factor at that time. 
+4. **integrator: Closure** - The variable time scaling function whose value specifies the 
 
-5. **progres: Closures** - A handler that is periodically executed to send progress images and values.
+5. **progress: Closures** - A handler that is periodically executed to send progress images and values.
 
 6. **completion: Closure** - A handler that is executed when the operation has completed to send a message of success or not.
-
-The integrator need not be a definite intergral. When it is a definite intergral the interpretation is that the integrand specifies the instantaeous scale factor at every time in the video to be scaled. 
 
 Example usage is provided in the code. Look in ScaleVideoApp.swift and uncomment the code in `init()`:
 
@@ -69,9 +67,9 @@ Example usage is provided in the code. Look in ScaleVideoApp.swift and uncomment
 let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 ```
 
-Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated variably scaled video samples. 
+Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. 
 
-Here is an explicit sample with the scaling function s(t) = sqrt(t), and kDefaultURL pointing to a video bundle resource. 
+Here is an explicit sample with the scaling function s(t) = t, and kDefaultURL pointing to a video bundle resource. Since sqrt(t) is the integral of 
 
 The output is a video whose rate of play slowly increases:
 
@@ -81,7 +79,7 @@ let fm = FileManager.default
 let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
 let destinationPath = docsurl.appendingPathComponent("test.mov").path
-let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in sqrt(t)}, progress: { p, _ in
+let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t}, progress: { p, _ in
     print("p = \(p)")
 }, completion: { result, error in
     print("result = \(String(describing: result))")
