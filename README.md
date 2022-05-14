@@ -80,7 +80,7 @@ let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "m
 let fm = FileManager.default
 let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
 
-let destinationPath = docsurl.appendingPathComponent("test.mov").path
+let destinationPath = docsurl.appendingPathComponent("2x.mov").path
 let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t/2}, progress: { p, _ in
     print("p = \(p)")
 }, completion: { result, error in
@@ -89,11 +89,11 @@ let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: 
 
 scaleVideo?.start()
 ```
-Other examples:
+Other examples include:
 
-If s(t) = 2 * t, then s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
+s(t) = 2 * t, then s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
 
-If s(t) = t * t/2, s'(t) = t, time is locally scaled at a variable rate from 0 to 1, and the video rate varies from fast to normal play.
+s(t) = t * t/2, then s'(t) = t, time is locally scaled at a variable rate from 0 to 1, and the video rate varies from fast to normal play.
 
 
 [App]: https://developer.apple.com/documentation/swiftui/app
