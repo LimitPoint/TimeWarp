@@ -127,7 +127,7 @@ struct ScaleVideoApp: App {
         // Go to Documents to see output:
         
         // iterate all tests:
-        //let _ = ScaleFunctionType.allCases .map({ testScaleVideo(scaleType: $0) })
+        //let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
         
         // or try individually:
         /*
