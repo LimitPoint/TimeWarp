@@ -2,7 +2,9 @@
 # ScaleVideo.swift
 ## Variably scales video in time domain
 
-Learn more about *uniformly* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived.
+This project implements a method that *variably* scales video and audio. 
+
+Learn more about *uniformly* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived. 
 
 The associated Xcode project implements a [SwiftUI] app for macOS and iOS that variably scales video files stored on your device or iCloud. 
 
