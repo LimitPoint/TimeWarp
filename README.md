@@ -60,7 +60,7 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - A time scaling function defined on the unit interval [0,1], whose derivitive is the instantaneous time scale factor. 
+4. **integrator: Closure** - A function defined on the unit interval [0,1] whose *derivitive* is interpreted as the instantaneous time scale factor. Thus it can more naturally be provided as the definite integral of that derivitive, or summation of all local scaling up to that time.  
 
 5. **progress: Closures** - A handler that is periodically executed to send progress images and values.
 
@@ -74,6 +74,8 @@ In ScaleVideoApp.swift try uncommenting the code in `init()`:
 // iterate all tests:
 let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 ```
+
+That series of examples makes use of integration to define the scaling function, or integrator.
 
 Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. 
 
