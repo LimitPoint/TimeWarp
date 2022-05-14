@@ -75,13 +75,13 @@ In ScaleVideoApp.swift try uncommenting the code in `init()`:
 let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 ```
 
-That series of examples makes use of integration to define the scaling function, or integrator.
+That series of examples makes use of integration of the instantaeous scaling function for the integrator.
 
 Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. 
 
-Here is another example with the scaling function s(t) = t/2, and kDefaultURL pointing to a video bundle resource. 
+Here is another example with the integrator set to s(t) = t/2, and kDefaultURL pointing to a video bundle resource. 
 
-The derivitive of s(t) is s'(t) = 1/2 so time is scaled locally halved uniformly, and the resulting video plays uniformly at 2x the normal rate:
+The derivitive of s(t) is s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate:
 
 ```swift
 let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
