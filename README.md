@@ -2,13 +2,11 @@
 # TimeWarp
 ## Variably scales video in time domain
 
-This project implements a method that variably scales video and audio in the time domain.
+This project implements a method that variably scales video and audio in the time domain. Learn more about *uniformly* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived. 
 
-Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the instantaneous time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration.
+Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the [instantaneous] time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration. It will be referred to as the instantaneous time scale function.
 
-In this way the absolute time scale at any particular time `t` is the sum of all local time scaling up to that time, or the definite integral of the instantaneous scaling function from `0` to `t`.
-
-Learn more about *uniformly* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived. 
+In this way the absolute time scale at any particular time `t` is the sum of all local, or [infinitesimal], time scaling up to that time, or the [definite integral] of the instantaneous scaling function from `0` to `t`.
 
 The associated Xcode project implements a [SwiftUI] app for macOS and iOS that variably scales video files stored on your device or iCloud. 
 
@@ -20,7 +18,7 @@ Select the scaling type and its parameters using sliders and popup menu.
 
 ## Classes
 
-The project is comprised of the same classes but modified for variably scaling with [definite integration](https://developer.apple.com/documentation/accelerate/quadrature):
+The project is comprised of the same classes but modified for variably scaling with [definite integration]:
 
 1. `ScaleVideoApp` - The [App] for import, scale and export.
 2. `ScaleVideoObservable` - An [ObservableObject] that manages the user interaction to scale and play video files.
@@ -60,13 +58,13 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - A function defined on the unit interval [0,1] whose *derivative* is interpreted as the instantaneous time scale factor. Thus it can be provided as the definite integral of the instantaneous time scale function, or as its antiderivitive, so its value at time `t` in [0,1] is the accumulative time scaling over the interval [0,t].
+4. **integrator: Closure** - A function defined on the unit interval [0,1] whose [derivative] is interpreted as the instantaneous time scale factor. Thus it can be provided as the definite integral of the instantaneous time scale function, or as its [antiderivative], so its value at time `t` in [0,1] is the accumulative time scaling over the interval [0,t].
 
 5. **progress: Closures** - A handler that is periodically executed to send progress images and values.
 
 6. **completion: Closure** - A handler that is executed when the operation has completed to send a message of success or not.
 
-Example usage is provided in the code for both definite integrals and antiderivitives as the integrator.
+Example usage is provided in the code for both definite integrals and antiderivatives as the integrator.
 
 In ScaleVideoApp.swift try uncommenting the code in `init()`. Run the app on the Mac and navigate to the apps Documents folder using the 'Go to Documents' button in the Mac app, or 'Go to Folder...' from the 'Go' menu in the Finder (The path to the generated videos appear in the Xcode log view). There you will find the generated video samples. 
 
@@ -77,13 +75,13 @@ This `integralTests` series of examples uses integration of instantaneous scalin
 let _ = IntegralType.allCases.map({ integralTests(integralType: $0) })
 ```
 
-This `antiDerivitiveTests` series of examples uses antiderivitive of instantaneous scaling functions for the integrator:
+This `antiDerivativeTests` series of examples uses the antiderivative of instantaneous scaling functions for the integrator:
 
 ```swift
-let _ = AntiDerivitiveType.allCases.map({ antiDerivitiveTests(antiDerivitiveType: $0) })
+let _ = AntiDerivativeType.allCases.map({ antiDerivativeTests(antiDerivativeType: $0) })
 ```
 
-In the first example the integrator is the antiderivitive s(t) = t/2. 
+In the first example the integrator is the antiderivative s(t) = t/2. 
 
 The derivative of s(t) = t/2 is the instantaneous scaling function s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate.
 
@@ -106,3 +104,10 @@ For s(t) = t * t/2, with instantaneous scaling function s'(t) = t, time is local
 [startDownloadingUbiquitousItem]: https://developer.apple.com/documentation/foundation/filemanager/1410377-startdownloadingubiquitousitem
 [startAccessingSecurityScopedResource]: https://developer.apple.com/documentation/foundation/nsurl/1417051-startaccessingsecurityscopedreso
 [Quadrature]: https://developer.apple.com/documentation/accelerate/quadrature
+[instantaneous]: https://en.wikipedia.org/wiki/Derivative
+[infinitesimal]: https://en.wikipedia.org/wiki/Derivative
+[definite integral]: https://en.wikipedia.org/wiki/Integral
+[antiderivative]: https://en.wikipedia.org/wiki/Antiderivative
+[derivative]: https://en.wikipedia.org/wiki/Derivative
+[definite integration]: https://developer.apple.com/documentation/accelerate/quadrature
+[quadrature]: https://developer.apple.com/documentation/accelerate/quadrature
