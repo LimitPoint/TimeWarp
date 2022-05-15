@@ -60,47 +60,34 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - A function defined on the unit interval [0,1] whose *derivative* is interpreted as the instantaneous time scale factor. Thus it can more naturally be provided as the definite integral of that derivative, or summation of all local scaling up to that time.  
+4. **integrator: Closure** - A function defined on the unit interval [0,1] whose *derivative* is interpreted as the instantaneous time scale factor. Thus it can be provided as the definite integral of the instantaneous time scale function, or as its antiderivitive, so its value at time `t` in [0,1] is the accumulative time scaling over the interval [0,t].
 
 5. **progress: Closures** - A handler that is periodically executed to send progress images and values.
 
 6. **completion: Closure** - A handler that is executed when the operation has completed to send a message of success or not.
 
-Example usage is provided in the code. 
+Example usage is provided in the code for both definite integrals and antiderivitives as the integrator.
 
-In ScaleVideoApp.swift try uncommenting the code in `init()`. This series of examples uses integration of instantaneous scaling functions for the integrator.:
+In ScaleVideoApp.swift try uncommenting the code in `init()`. Run the app on the Mac and navigate to the apps Documents folder using the 'Go to Documents' button in the Mac app, or 'Go to Folder...' from the 'Go' menu in the Finder (The path to the generated videos appear in the Xcode log view). There you will find the generated video samples. 
+
+This `integralTests` series of examples uses integration of instantaneous scaling functions for the integrator:
 
 ```swift
 // iterate all tests:
-let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
+let _ = IntegralType.allCases.map({ integralTests(integralType: $0) })
 ```
 
-Run the app on the Mac and navigate to the apps Documents folder using the 'Go to Documents' button in the Mac app, or 'Go to Folder...' from the 'Go' menu in the Finder (The path to the generated videos appear in the Xcode log view). There you will find the generated video samples. 
-
-Another example is given with the integrator set to s(t) = t/2, and kDefaultURL pointing to a video bundle resource. 
-
-The derivative of s(t) is the instantaneous scaling function s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate:
+This `antiDerivitiveTests` series of examples uses antiderivitive of instantaneous scaling functions for the integrator:
 
 ```swift
-let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
-let fm = FileManager.default
-let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-
-let destinationPath = docsurl.appendingPathComponent("2x.mov").path
-let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t/2}, progress: { p, _ in
-    print("p = \(p)")
-}, completion: { result, error in
-    print("result = \(String(describing: result))")
-})
-
-scaleVideo?.start()
+let _ = AntiDerivitiveType.allCases.map({ antiDerivitiveTests(antiDerivitiveType: $0) })
 ```
-Other examples include:
 
-s(t) = 2 * t, with instantaneous scaling function s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
+The derivative of s(t) = t/2 is the instantaneous scaling function s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate.
 
-s(t) = t * t/2, with instantaneous scaling function s'(t) = t, time is locally scaled at a variable rate `t` from 0 to 1, and the video rate varies from fast to normal play.
+For s(t) = 2 * t, with instantaneous scaling function s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
 
+For s(t) = t * t/2, with instantaneous scaling function s'(t) = t, time is locally scaled at a variable rate `t` from 0 to 1, and the video rate varies from fast to normal play.
 
 [App]: https://developer.apple.com/documentation/swiftui/app
 [ObservableObject]: https://developer.apple.com/documentation/combine/observableobject
