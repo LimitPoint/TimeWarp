@@ -22,7 +22,7 @@ Select the scaling type and its parameters using sliders and popup menu.
 
 ## Classes
 
-The project is comprised of the same classes but modified for variably scaling with [definite integration]:
+The project is comprised of the same classes as [ScaleVideo] but modified for variably scaling with [definite integration]:
 
 1. `ScaleVideoApp` - The [App] for import, scale and export.
 2. `ScaleVideoObservable` - An [ObservableObject] that manages the user interaction to scale and play video files.
@@ -92,6 +92,7 @@ For s(t) = 2 * t, with instantaneous scaling function s'(t) = 2, time is locally
 For s(t) = t * t/2, with instantaneous scaling function s'(t) = t, time is locally scaled at a variable rate `t` from 0 to 1, and the video rate varies from fast to normal play.
 
 [App]: https://developer.apple.com/documentation/swiftui/app
+[ScaleVideo]: http://www.limit-point.com/blog/2022/scale-video/
 [ObservableObject]: https://developer.apple.com/documentation/combine/observableobject
 [AVFoundation]: https://developer.apple.com/documentation/avfoundation/
 [vDSP]: https://developer.apple.com/documentation/accelerate/vdsp
