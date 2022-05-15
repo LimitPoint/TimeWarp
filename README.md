@@ -70,7 +70,7 @@ Arguments:
 
 Example usage is provided in the code for both definite integrals and antiderivatives as the integrator.
 
-In ScaleVideoApp.swift try uncommenting the code in `init()`. Run the app on the Mac and navigate to the apps Documents folder using the 'Go to Documents' button in the Mac app, or 'Go to Folder...' from the 'Go' menu in the Finder (The path to the generated videos appear in the Xcode log view). There you will find the generated video samples. 
+In *ScaleVideoApp.swift* try uncommenting the code below in `init()`. Run the app on the Mac and navigate to the apps Documents folder using the 'Go to Documents' button in the Mac app, or 'Go to Folder...' from the 'Go' menu in the Finder (The path to the generated videos appear in the Xcode log view). There you will find the generated video samples. 
 
 This `integralTests` series of examples uses integration of instantaneous scaling functions for the integrator:
 
