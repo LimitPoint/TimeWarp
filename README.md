@@ -2,7 +2,7 @@
 # TimeWarp
 ## Variably scales video in time domain
 
-This project implements a method that *variably* scales video and audio. 
+This project implements a method that variably scales video and audio in the time domain.
 
 Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the instantaneous time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration.
 
