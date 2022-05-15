@@ -2,9 +2,13 @@
 # TimeWarp
 ## Variably scales video in time domain
 
-This project implements a method that variably scales video and audio in the time domain. Learn more about *uniformly* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived. 
+This project implements a method that variably scales video and audio in the time domain. This means that the time between video and audio samples is variably scaled along the timeline of the media.
+
+Learn more about *uniformly* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived. 
 
 Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the [instantaneous] time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration. It will be referred to as the instantaneous time scale function.
+
+Since the values of the time scale factor function can be any positive number time may be contracted or expanded variably across the duration of the audio and video, hence the name TimeWarp.
 
 In this way the absolute time scale at any particular time `t` is the sum of all local, or [infinitesimal], time scaling up to that time, or the [definite integral] of the instantaneous scaling function from `0` to `t`.
 
@@ -81,9 +85,7 @@ This `antiDerivativeTests` series of examples uses the antiderivative of instant
 let _ = AntiDerivativeType.allCases.map({ antiDerivativeTests(antiDerivativeType: $0) })
 ```
 
-In the first example the integrator is the antiderivative s(t) = t/2. 
-
-The derivative of s(t) = t/2 is the instantaneous scaling function s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate.
+In the first example the integrator is the antiderivative s(t) = t/2. The derivative of s(t) = t/2 is the instantaneous scaling function s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate.
 
 For s(t) = 2 * t, with instantaneous scaling function s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
 
