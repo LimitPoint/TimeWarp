@@ -8,7 +8,13 @@
 
 import SwiftUI
 
-enum ScaleFunctionTestType: CaseIterable {
+/*
+ Two types of tests:
+    IntegralType - integrator is a definite integral type
+    AntiDerivitiveType - integrator is an antiderivitive type
+ */
+
+enum IntegralType: CaseIterable {
     case fastNormal
     case normalFast
     case normalSlow
@@ -22,11 +28,11 @@ enum ScaleFunctionTestType: CaseIterable {
     case double
 }
 
-func testScaleVideo(scaleType:ScaleFunctionTestType) {
+func integralTests(integralType:IntegralType) {
     
     var filename:String
     
-    switch scaleType {
+    switch integralType {
         case .fastNormal:
             filename = "fast-normal.mov"
         case .normalFast:
@@ -55,7 +61,7 @@ func testScaleVideo(scaleType:ScaleFunctionTestType) {
         
         var value:Double?
         
-        switch scaleType {
+        switch integralType {
             case .fastNormal:
                 value = integrate(t, integrand: { t in 
                     mapunit(1, 0.1, smoothstep_flip_on(0, 1, t))
@@ -118,6 +124,54 @@ func testScaleVideo(scaleType:ScaleFunctionTestType) {
     scaleVideo?.start()
 }
 
+enum AntiDerivitiveType: CaseIterable {
+    case constantDoubleRate
+    case constantHalfRate
+    case variableRate
+}
+
+func antiDerivitiveTests(antiDerivitiveType:AntiDerivitiveType) {
+    
+    var filename:String
+    
+    switch antiDerivitiveType {
+        case .constantDoubleRate:
+            filename = "constantDoubleRate.mov"
+        case .constantHalfRate:
+            filename = "constantHalfRate.mov"
+        case .variableRate:
+            filename = "variableRate.mov"
+    }
+    
+    func antiDerivitive(_ t:Double) -> Double {
+        
+        var value:Double
+        
+        switch antiDerivitiveType {
+            case .constantDoubleRate:
+                value = t / 2
+            case .constantHalfRate:
+                value = 2 * t
+            case .variableRate:
+                value = t * t / 2
+        }
+        
+        return value
+    }
+    
+    let fm = FileManager.default
+    let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    
+    let destinationPath = docsurl.appendingPathComponent(filename).path
+    let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: antiDerivitive, progress: { p, _ in
+        print("p = \(p)")
+    }, completion: { result, error in
+        print("result = \(String(describing: result))")
+    })
+    
+    scaleVideo?.start()
+}
+
 @main
 struct ScaleVideoApp: App {
         
@@ -125,72 +179,11 @@ struct ScaleVideoApp: App {
         FileManager.clearDocuments()
         
         // Go to Documents to see output:
+        // iterate all integral tests:
+        //let _ = IntegralType.allCases.map({ integralTests(integralType: $0) })
         
-        // iterate all tests:
-        //let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
-        
-        // or try individually:
-        /*
-         testScaleVideo(scaleType: .fastNormal)
-         testScaleVideo(scaleType: .normalFast)
-         testScaleVideo(scaleType: .slowNormal)
-         testScaleVideo(scaleType: .normalSlow)
-         testScaleVideo(scaleType: .cosine3)
-         testScaleVideo(scaleType: .cosine6)
-         testScaleVideo(scaleType: .sqrt)
-         testScaleVideo(scaleType: .oneOverSqrt)
-         testScaleVideo(scaleType: .linear)
-         testScaleVideo(scaleType: .half)
-         testScaleVideo(scaleType: .double)
-         */
-        
-        // s(t) = t/2, rate of play doubled
-        /*
-        let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
-        let fm = FileManager.default
-        let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-        
-        let destinationPath = docsurl.appendingPathComponent("2x.mov").path
-        let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t/2}, progress: { p, _ in
-            print("p = \(p)")
-        }, completion: { result, error in
-            print("result = \(String(describing: result))")
-        })
-        
-        scaleVideo?.start()
-         */
-        
-        // s(t) = 2 * t, rate of play doubled
-        /*
-         let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
-         let fm = FileManager.default
-         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-         
-         let destinationPath = docsurl.appendingPathComponent("0.5x.mov").path
-         let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in 2 * t}, progress: { p, _ in
-         print("p = \(p)")
-         }, completion: { result, error in
-         print("result = \(String(describing: result))")
-         })
-         
-         scaleVideo?.start()
-         */
-        
-        // s(t) = t * t/2, plays with variable rate from fast to normal
-        /*
-         let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
-         let fm = FileManager.default
-         let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-         
-         let destinationPath = docsurl.appendingPathComponent("variable.mov").path
-        let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: {t in t * t/2}, progress: { p, _ in
-         print("p = \(p)")
-         }, completion: { result, error in
-         print("result = \(String(describing: result))")
-         })
-         
-         scaleVideo?.start()
-         */
+        // iterate all anti-derivitive tests:
+        //let _ = AntiDerivitiveType.allCases.map({ antiDerivitiveTests(antiDerivitiveType: $0) })
     }
     
     var body: some Scene {
