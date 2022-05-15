@@ -83,6 +83,8 @@ This `antiDerivitiveTests` series of examples uses antiderivitive of instantaneo
 let _ = AntiDerivitiveType.allCases.map({ antiDerivitiveTests(antiDerivitiveType: $0) })
 ```
 
+In the first example the integrator is the antiderivitive s(t) = t/2. 
+
 The derivative of s(t) = t/2 is the instantaneous scaling function s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate.
 
 For s(t) = 2 * t, with instantaneous scaling function s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
