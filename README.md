@@ -1,5 +1,5 @@
 ![TimeWarp](http://www.limit-point.com/assets/images/TimeWarp.jpg)
-# ScaleVideo.swift
+# TimeWarp
 ## Variably scales video in time domain
 
 This project implements a method that *variably* scales video and audio. 
@@ -68,20 +68,18 @@ Arguments:
 
 Example usage is provided in the code. 
 
-In ScaleVideoApp.swift try uncommenting the code in `init()`:
+In ScaleVideoApp.swift try uncommenting the code in `init()`. This series of examples uses integration of instantaneous scaling functions for the integrator.:
 
 ```swift
 // iterate all tests:
 let _ = ScaleFunctionTestType.allCases .map({ testScaleVideo(scaleType: $0) })
 ```
 
-That series of examples makes use of integration of the instantaneous scaling function for the integrator.
+Run the app on the Mac and navigate to the apps Documents folder using the 'Go to Documents' button in the Mac app, or 'Go to Folder...' from the 'Go' menu in the Finder (The path to the generated videos appear in the Xcode log view). There you will find the generated video samples. 
 
-Run the app on the Mac and navigate to the apps Documents folder using 'Go to Folder...' from the 'Go' menu in the Finder. There you will find the generated video samples. (Use the path to the generated videos that appear in the Xcode log view.)
+Another example is given with the integrator set to s(t) = t/2, and kDefaultURL pointing to a video bundle resource. 
 
-Here is another example with the integrator set to s(t) = t/2, and kDefaultURL pointing to a video bundle resource. 
-
-The derivative of s(t) is s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate:
+The derivative of s(t) is the instantaneous scaling function s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate:
 
 ```swift
 let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
@@ -99,9 +97,9 @@ scaleVideo?.start()
 ```
 Other examples include:
 
-s(t) = 2 * t, then s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
+s(t) = 2 * t, with instantaneous scaling function s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
 
-s(t) = t * t/2, then s'(t) = t, time is locally scaled at a variable rate `t` from 0 to 1, and the video rate varies from fast to normal play.
+s(t) = t * t/2, with instantaneous scaling function s'(t) = t, time is locally scaled at a variable rate `t` from 0 to 1, and the video rate varies from fast to normal play.
 
 
 [App]: https://developer.apple.com/documentation/swiftui/app
