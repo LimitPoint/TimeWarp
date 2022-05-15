@@ -11,7 +11,7 @@ import SwiftUI
 /*
  Two types of tests:
     IntegralType - integrator is a definite integral type
-    AntiDerivitiveType - integrator is an antiderivitive type
+    AntiDerivativeType - integrator is an antiderivative type
  */
 
 enum IntegralType: CaseIterable {
@@ -124,17 +124,17 @@ func integralTests(integralType:IntegralType) {
     scaleVideo?.start()
 }
 
-enum AntiDerivitiveType: CaseIterable {
+enum AntiDerivativeType: CaseIterable {
     case constantDoubleRate
     case constantHalfRate
     case variableRate
 }
 
-func antiDerivitiveTests(antiDerivitiveType:AntiDerivitiveType) {
+func antiDerivativeTests(antiDerivativeType:AntiDerivativeType) {
     
     var filename:String
     
-    switch antiDerivitiveType {
+    switch antiDerivativeType {
         case .constantDoubleRate:
             filename = "constantDoubleRate.mov"
         case .constantHalfRate:
@@ -143,11 +143,11 @@ func antiDerivitiveTests(antiDerivitiveType:AntiDerivitiveType) {
             filename = "variableRate.mov"
     }
     
-    func antiDerivitive(_ t:Double) -> Double {
+    func antiDerivative(_ t:Double) -> Double {
         
         var value:Double
         
-        switch antiDerivitiveType {
+        switch antiDerivativeType {
             case .constantDoubleRate:
                 value = t / 2
             case .constantHalfRate:
@@ -163,7 +163,7 @@ func antiDerivitiveTests(antiDerivitiveType:AntiDerivitiveType) {
     let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
     
     let destinationPath = docsurl.appendingPathComponent(filename).path
-    let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: antiDerivitive, progress: { p, _ in
+    let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: antiDerivative, progress: { p, _ in
         print("p = \(p)")
     }, completion: { result, error in
         print("result = \(String(describing: result))")
@@ -182,8 +182,8 @@ struct ScaleVideoApp: App {
         // iterate all integral tests:
         //let _ = IntegralType.allCases.map({ integralTests(integralType: $0) })
         
-        // iterate all anti-derivitive tests:
-        //let _ = AntiDerivitiveType.allCases.map({ antiDerivitiveTests(antiDerivitiveType: $0) })
+        // iterate all antiderivative tests:
+        //let _ = AntiDerivativeType.allCases.map({ antiDerivativeTests(antiDerivativeType: $0) })
     }
     
     var body: some Scene {
