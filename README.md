@@ -6,8 +6,6 @@ This project implements a method that variably scales video and audio in the tim
 
 Learn more about *variably* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/time-warp).
 
-Learn more about *uniformly* scaling video files from our [ScaleVideo] blog post from which this project is derived.
-
 Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the [instantaneous] time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration. It will be referred to as the instantaneous time scale function.
 
 Since the values of the instantaneous time scale function can be any positive number time may be contracted or expanded variably across the duration of the audio and video, hence the name TimeWarp.
