@@ -6,7 +6,7 @@ This project implements a method that variably scales video and audio in the tim
 
 Learn more about *variably* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/time-warp).
 
-Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the [instantaneous] time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration. It will be referred to as the instantaneous time scale function.
+Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the instantaneous time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration. It will be referred to as the instantaneous time scale function.
 
 As the values `v` of the instantaneous time scale function can be any positive number the [infinitesimal] time intervals may be contracted, `v` < 1, or expanded, `v` > 1, variably across the duration of the audio and video.
 
@@ -107,8 +107,7 @@ For s(t) = t * t/2, with instantaneous scaling function s'(t) = t, time is local
 [startDownloadingUbiquitousItem]: https://developer.apple.com/documentation/foundation/filemanager/1410377-startdownloadingubiquitousitem
 [startAccessingSecurityScopedResource]: https://developer.apple.com/documentation/foundation/nsurl/1417051-startaccessingsecurityscopedreso
 [Quadrature]: https://developer.apple.com/documentation/accelerate/quadrature
-[instantaneous]: https://en.wikipedia.org/wiki/Derivative
-[infinitesimal]: https://en.wikipedia.org/wiki/Derivative
+[infinitesimal]: https://en.wikipedia.org/wiki/Infinitesimal
 [definite integral]: https://en.wikipedia.org/wiki/Integral
 [antiderivative]: https://en.wikipedia.org/wiki/Antiderivative
 [derivative]: https://en.wikipedia.org/wiki/Derivative
