@@ -2,13 +2,13 @@
 # TimeWarp
 ## Variably scales video in time domain
 
-This project implements a method that variably scales video and audio in the time domain. This means that the time between video and audio samples is variably scaled along the timeline of the media.
+This project implements a method that variably scales video and audio in the time domain. This means that the time between video and audio samples is variably scaled along the timeline of the video.
 
 Learn more about *variably* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/time-warp).
 
 Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the [instantaneous] time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration. It will be referred to as the instantaneous time scale function.
 
-Since the values of the instantaneous time scale function can be any positive number time may be contracted or expanded variably across the duration of the audio and video, hence the name TimeWarp.
+As the values `v` of the instantaneous time scale function can be any positive number the [infinitesimal] time intervals may be contracted, `v` < 1, or expanded, `v` > 1, variably across the duration of the audio and video, hence the name TimeWarp.
 
 In this way the absolute time scale at any particular time `t` is the sum of all local, or [infinitesimal], time scaling up to that time, or the [definite integral] of the instantaneous scaling function from `0` to `t`.
 
