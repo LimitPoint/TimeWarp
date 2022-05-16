@@ -4,7 +4,9 @@
 
 This project implements a method that variably scales video and audio in the time domain. This means that the time between video and audio samples is variably scaled along the timeline of the media.
 
-Learn more about *uniformly* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/scale-video) from which this project is derived. 
+Learn more about *variably* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/time-warp).
+
+Learn more about *uniformly* scaling video files from our [ScaleVideo] blog post from which this project is derived.
 
 Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the [instantaneous] time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration. It will be referred to as the instantaneous time scale function.
 
