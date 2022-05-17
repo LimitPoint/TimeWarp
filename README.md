@@ -2,7 +2,7 @@
 # TimeWarp
 ## Variably scales video in time domain
 
-This project implements a method that variably scales video and audio in the time domain. This means that the time between video and audio samples is variably scaled along the timeline of the video.
+This project implements a method that variably scales video and audio in the time domain. This means that the time intervals between video and audio samples is variably scaled along the timeline of the video.
 
 Learn more about *variably* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/time-warp).
 
