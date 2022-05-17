@@ -16,6 +16,8 @@ struct ScaleOptionsView: View {
     var body: some View {
         
         VStack {
+            Text(String(format: "%.2f", scaleVideoObservable.factor))
+                .foregroundColor(isEditing ? .red : .blue)
             Slider(
                 value: $scaleVideoObservable.factor,
                 in: 0.1...2
@@ -28,8 +30,7 @@ struct ScaleOptionsView: View {
             } onEditingChanged: { editing in
                 isEditing = editing
             }
-            Text(String(format: "%.2f", scaleVideoObservable.factor))
-                .foregroundColor(isEditing ? .red : .blue)
+            
             
             Picker("Scaling", selection: $scaleVideoObservable.scalingType) {
                 ForEach(ScaleFunctionType.allCases) { scalingType in
@@ -38,6 +39,8 @@ struct ScaleOptionsView: View {
             }
             
             Group {
+                Text(String(format: "%.2f", scaleVideoObservable.modifier))
+                    .foregroundColor(isEditing ? .red : .blue) 
                 Slider(
                     value: $scaleVideoObservable.modifier,
                     in: 0.1...1
@@ -50,8 +53,7 @@ struct ScaleOptionsView: View {
                 } onEditingChanged: { editing in
                     isEditing = editing
                 }
-                Text(String(format: "%.2f", scaleVideoObservable.modifier))
-                    .foregroundColor(isEditing ? .red : .blue) 
+                
             }
             .opacity((scaleVideoObservable.scalingType != .constant ? 1 : 0))
             .animation(.easeIn)
