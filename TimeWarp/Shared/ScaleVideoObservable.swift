@@ -219,7 +219,7 @@ class ScaleVideoObservable:ObservableObject {
                 if let copiedURL = copiedURL {
                     self.videoURL = copiedURL
                     
-                    self.player = AVPlayer(url: copiedURL)
+                    self.play(copiedURL)
                     completion(true)
                 }
                 else {
@@ -229,13 +229,20 @@ class ScaleVideoObservable:ObservableObject {
         }
     }
     
+    var periodicTimeObserver:Any?
+    
     func play(_ url:URL) {
+        
+        if let periodicTimeObserver = periodicTimeObserver {
+            self.player.removeTimeObserver(periodicTimeObserver)
+        }
+        
         self.player.pause()
         self.player = AVPlayer(url: url)
         
         self.currentPlayerDuration = AVAsset(url: url).duration.seconds
-        self.player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 30), queue: nil) { cmTime in
-            self.currentPlayerTime = cmTime.seconds
+        periodicTimeObserver = self.player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 30), queue: nil) { [weak self] cmTime in
+            self?.currentPlayerTime = cmTime.seconds
         }
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + .milliseconds(500)) { () -> Void in
