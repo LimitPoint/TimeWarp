@@ -62,13 +62,13 @@ Arguments:
 
 3. **destination: String** - The path of the scaled video file.
 
-4. **integrator: Closure** - A function defined on the unit interval [0,1] whose [derivative] is interpreted as the instantaneous time scale factor. Thus it can be provided as the definite integral of the instantaneous time scale function, or as its [antiderivative], so its value at time `t` in [0,1] is the accumulative time scaling over the interval [0,t].
+4. **integrator: Closure** - A function that is the definite integral of the instantaneous time scale function on the unit interval [0,1].
 
 5. **progress: Closure** - A handler that is periodically executed to send progress images and values.
 
 6. **completion: Closure** - A handler that is executed when the operation has completed to send a message of success or not.
 
-Example usage is provided in the code for both definite integrals and antiderivatives as the integrator.
+Example usage is provided in the code defining the integrator as definite integrals or, equivalently, using antiderivatives.
 
 In *ScaleVideoApp.swift* try uncommenting the code below in `init()`. Run the app on the Mac and navigate to the apps Documents folder using the 'Go to Documents' button in the Mac app, or 'Go to Folder...' from the 'Go' menu in the Finder (The path to the generated videos appear in the Xcode log view). There you will find the generated video samples. 
 
