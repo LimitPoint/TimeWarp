@@ -6,9 +6,7 @@ This project implements a method that variably scales video and audio in the tim
 
 Learn more about *variably* scaling video files from our [in-depth blog post](https://www.limit-point.com/blog/2022/time-warp).
 
-Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the instantaneous time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration. It will be referred to as the instantaneous time scale function.
-
-As the values `v` of the instantaneous time scale function can be any positive number the [infinitesimal] time intervals may be contracted, `v` < 1, or expanded, `v` > 1, variably across the duration of the audio and video.
+Variable time scaling is interpreted as a function on the unit interval [0,1] that specifies the instantaneous time scale factor at each time in the video, with video time mapped to the unit interval with division by its duration. It will be referred to as the instantaneous time scale function. The values `v` of the instantaneous time scale function will contract or expand [infinitesimal] time intervals variably across the duration of the video.
 
 In this way the absolute time scale at any particular time `t` is the sum of all infinitesimal time scaling up to that time, or the [definite integral] of the instantaneous scaling function from `0` to `t`.
 
