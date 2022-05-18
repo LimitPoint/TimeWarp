@@ -231,6 +231,12 @@ In use:
 scalingFunction = {t in tapered_cosine(t, factor: self.factor, modifier: self.modifier) }
 ```
 
+This technique is generally useful for creating a hybrid function `h` by blending any two functions `f` and `g` on [0,1] where `s` is a function that smoothly transitions from `0` to `1` on [0,1]: 
+
+`h = f + (g - f) * s`
+
+The [smoothstep] functions are examples of a class of functions `s` that are useful for this purpose.
+
 **Power Function** 
 
 ![Power](http://www.limit-point.com/assets/images/TimeWarp_Power.jpg)
