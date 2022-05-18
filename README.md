@@ -735,7 +735,7 @@ Variably scaling the audio samples is a bit more work as we will see next.
 ### 2. Audio writer `writeAudioOnQueue`
 [Back to ScaleVideo Writers](#scale-video-writers)
 
-The discussion here focuses on how it has been altered to support variable scaling.
+The discussion here focuses on how `ScaleVideo` has been altered to support variable time scaling.
 
 See [ScaleAudio] for basic information on processing audio.
 
