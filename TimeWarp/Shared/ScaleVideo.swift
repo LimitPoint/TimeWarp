@@ -237,7 +237,7 @@ class ScaleVideo : VideoWriter {
     var frameDuration:CMTime
     var currentTime:CMTime = CMTime.zero
     
-    var progressFactor:CGFloat = 1.0/3.0 // 3 contributors
+    var progressFactor:CGFloat = 1.0/3.0 // 3 contributors - 1 if no audio
     var cumulativeProgress:CGFloat = 0
     
     var ciOrientationTransform:CGAffineTransform = CGAffineTransform.identity
@@ -283,6 +283,9 @@ class ScaleVideo : VideoWriter {
             totalSampleCount = self.videoAsset.audioBufferAndSampleCounts(outputSettings).sampleCount
             sourceFormat = sampleBufferSourceFormat
             sampleRate = audioStreamBasicDescription.mSampleRate
+        }
+        else {
+            progressFactor = 1
         }
     }
     
