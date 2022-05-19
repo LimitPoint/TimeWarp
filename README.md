@@ -56,7 +56,7 @@ Arguments:
 
 1. **path: String** - The path of the video file to be scaled.
 
-2. **frameRate: Int32** - The desired frame rate of the scaled video. 
+2. **frameRate: Int32** - The desired frame rate of the scaled video. Specify 0 for variable rate.
 
 3. **destination: String** - The path of the scaled video file.
 
