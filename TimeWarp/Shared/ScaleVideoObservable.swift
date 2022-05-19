@@ -43,7 +43,7 @@ class ScaleVideoObservable:ObservableObject {
     
     @Published var factor:Double = 1.5 // 0.1 to 2
     @Published var modifier:Double = 0.5 // 0.1 to 1
-    @Published var fps:FPS = .thirty
+    @Published var fps:FPS = .sixty
     
     @Published var scalingPath = Path()
     var maximum_y:Double = 0
