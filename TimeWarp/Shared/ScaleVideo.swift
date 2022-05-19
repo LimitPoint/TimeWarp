@@ -234,7 +234,7 @@ class ScaleVideo : VideoWriter {
     var currentIndex:Int = 0
     var sampleBuffer:CMSampleBuffer?
     var sampleBufferPresentationTime = CMTime.zero
-    var frameDuration:CMTime
+    var frameDuration:CMTime?
     var currentTime:CMTime = CMTime.zero
     
     var progressFactor:CGFloat = 1.0/3.0 // 3 contributors - 1 if no audio
@@ -258,14 +258,12 @@ class ScaleVideo : VideoWriter {
         // MARK: Init and Start    
     init?(path : String, frameRate: Int32, destination: String, integrator:@escaping (Double) -> Double, progress: @escaping (CGFloat, CIImage?) -> Void, completion: @escaping (URL?, String?) -> Void) {
         
-        guard frameRate > 0 else {
-            return nil
-        }
-        
         self.integrator = integrator
         
-        let scale:Int32 = 600
-        self.frameDuration = CMTime(value: 1, timescale: CMTimeScale(frameRate)).convertScale(scale, method: CMTimeRoundingMethod.default)
+        if frameRate > 0 { // we are resampling
+            let scale:Int32 = 600
+            self.frameDuration = CMTime(value: 1, timescale: CMTimeScale(frameRate)).convertScale(scale, method: CMTimeRoundingMethod.default)
+        }
         
         super.init(path: path, destination: destination, progress: progress, completion: completion)
         
@@ -338,6 +336,8 @@ class ScaleVideo : VideoWriter {
     }
     
         // MARK: Video Writing
+    
+        // MARK: Resampling
     func copyNextSampleBufferForResampling(lastPercent:CGFloat) -> CGFloat {
         
         self.sampleBuffer = nil
@@ -395,8 +395,7 @@ class ScaleVideo : VideoWriter {
         return appended
     }
     
-        // MARK: Override writeVideoOnQueue
-    override func writeVideoOnQueue(_ serialQueue: DispatchQueue) {
+    func writeVideoOnQueueResampled(_ serialQueue: DispatchQueue) {
         
         guard self.videoReader.startReading() else {
             self.finishVideoWriting()
@@ -428,8 +427,8 @@ class ScaleVideo : VideoWriter {
                     
                     if self.currentTime <= self.sampleBufferPresentationTime {
                         
-                        if self.appendNextSampleBufferForResampling() {
-                            self.currentTime = CMTimeAdd(self.currentTime, self.frameDuration)
+                        if let frameDuration = self.frameDuration, self.appendNextSampleBufferForResampling() {
+                            self.currentTime = CMTimeAdd(self.currentTime, frameDuration)
                         }
                         else {
                             self.sampleBuffer = nil
@@ -440,6 +439,76 @@ class ScaleVideo : VideoWriter {
                     }
                 }
             }
+        }
+    }
+    
+        // MARK: Scaling
+    func writeVideoOnQueueScaled(_ serialQueue:DispatchQueue) {
+        
+        guard self.videoReader.startReading() else {
+            self.finishVideoWriting()
+            return
+        }
+        
+        var lastPercent:CGFloat = 0
+                
+        videoWriterInput.requestMediaDataWhenReady(on: serialQueue) {
+            
+            while self.videoWriterInput.isReadyForMoreMediaData, self.writingVideoFinished == false {
+                
+                autoreleasepool { () -> Void in
+                    
+                    guard self.isCancelled == false else {
+                        self.videoReader?.cancelReading()
+                        self.finishVideoWriting()
+                        return
+                    }
+                    
+                    guard let sampleBuffer = self.videoReaderOutput?.copyNextSampleBuffer() else {
+                        self.finishVideoWriting()
+                        return
+                    }
+                    
+                    var presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
+                    if let presentationTimeStampScaled = self.timeScale(presentationTimeStamp.seconds) {
+                        presentationTimeStamp = CMTimeMakeWithSeconds(presentationTimeStampScaled, preferredTimescale: 64000)
+                        if let adjustedSampleBuffer = sampleBuffer.setTimeStamp(time: presentationTimeStamp) {
+                            self.sampleBuffer = adjustedSampleBuffer
+                        }
+                        else {
+                            self.sampleBuffer = nil
+                        }
+                    }
+                    else {
+                        self.sampleBuffer = nil
+                    }
+                    
+                    guard let sampleBuffer = self.sampleBuffer, self.videoWriterInput.append(sampleBuffer) else {
+                        self.videoReader?.cancelReading()
+                        self.finishVideoWriting()
+                        return
+                    }
+                    
+                    self.currentIndex += 1
+                    
+                    let percent:CGFloat = min(CGFloat(self.currentIndex)/CGFloat(self.frameCount), 1.0)
+                    self.cumulativeProgress += ((percent - lastPercent) * self.progressFactor)
+                    self.progressAction(self.cumulativeProgress, self.sampleBuffer?.ciimage()?.transformed(by:self.ciOrientationTransform))
+                    lastPercent = percent
+                    print(self.cumulativeProgress)
+                    
+                }
+            }
+        }
+    }
+    
+        // MARK: Override writeVideoOnQueue
+    override func writeVideoOnQueue(_ serialQueue: DispatchQueue) {
+        if let _ = self.frameDuration {
+            writeVideoOnQueueResampled(serialQueue)
+        }
+        else {
+            writeVideoOnQueueScaled(serialQueue)
         }
     }
 

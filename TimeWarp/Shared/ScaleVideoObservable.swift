@@ -14,7 +14,7 @@ import Combine
 let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
 
 enum FPS: Int, CaseIterable, Identifiable {
-    case twentyFour = 24, thirty = 30, sixty = 60
+    case any = 0, twentyFour = 24, thirty = 30, sixty = 60
     var id: Self { self }
 }
 

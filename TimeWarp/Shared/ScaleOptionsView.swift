@@ -62,6 +62,7 @@ struct ScaleOptionsView: View {
                 Text("24").tag(FPS.twentyFour)
                 Text("30").tag(FPS.thirty)
                 Text("60").tag(FPS.sixty)
+                Text("Any").tag(FPS.any)
             }
             .pickerStyle(.segmented)
             
