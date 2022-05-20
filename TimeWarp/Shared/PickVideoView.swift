@@ -11,27 +11,12 @@ import AVKit
 
 let tangerine = Color(red: 0.98, green: 0.57, blue: 0.21, opacity:0.9)
 
-struct AlertInfo: Identifiable {
-    
-    enum AlertType {
-        case urlNotLoaded
-        case exporterSuccess
-        case exporterFailed
-    }
-    
-    let id: AlertType
-    let title: String
-    let message: String
-}
-
 struct PickVideoView: View {
     
     @ObservedObject var scaleVideoObservable:ScaleVideoObservable 
     
     @State private var showFileImporter: Bool = false
     @State private var showFileExporter: Bool = false
-    
-    @State private var alertInfo: AlertInfo?
     
     @State private var showURLLoadingProgress = false
     
@@ -65,13 +50,13 @@ struct PickVideoView: View {
             if case .success = result {
                 do {
                     let exportedURL: URL = try result.get()
-                    alertInfo = AlertInfo(id: .exporterSuccess, title: "Scaled Video Saved", message: exportedURL.lastPathComponent)
+                    scaleVideoObservable.alertInfo = AlertInfo(id: .exporterSuccess, title: "Scaled Video Saved", message: exportedURL.lastPathComponent)
                 }
                 catch {
                     
                 }
             } else {
-                alertInfo = AlertInfo(id: .exporterFailed, title: "Scaled Video Not Saved", message: (scaleVideoObservable.videoDocument?.filename ?? ""))
+                scaleVideoObservable.alertInfo = AlertInfo(id: .exporterFailed, title: "Scaled Video Not Saved", message: (scaleVideoObservable.videoDocument?.filename ?? ""))
             }
         }
         .fileImporter(isPresented: $showFileImporter, allowedContentTypes: [.movie, .quickTimeMovie, .mpeg4Movie], allowsMultipleSelection: false) { result in
@@ -80,7 +65,7 @@ struct PickVideoView: View {
                 guard let selectedURL: URL = try result.get().first else { return }
                 scaleVideoObservable.loadSelectedURL(selectedURL) { wasLoaded in
                     if !wasLoaded {
-                        alertInfo = AlertInfo(id: .urlNotLoaded, title: "Video Not Loaded", message: (scaleVideoObservable.errorMesssage ?? "No information available."))
+                        scaleVideoObservable.alertInfo = AlertInfo(id: .urlNotLoaded, title: "Video Not Loaded", message: (scaleVideoObservable.errorMesssage ?? "No information available."))
                     }
                     showURLLoadingProgress = false
                 }
@@ -88,7 +73,7 @@ struct PickVideoView: View {
                 print(error.localizedDescription)
             }
         }
-        .alert(item: $alertInfo, content: { alertInfo in
+        .alert(item: $scaleVideoObservable.alertInfo, content: { alertInfo in
             Alert(title: Text(alertInfo.title), message: Text(alertInfo.message))
         })
         .overlay(Group {

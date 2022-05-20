@@ -28,6 +28,20 @@ enum ScaleFunctionType: String, CaseIterable, Identifiable {
     var id: Self { self }
 }
 
+struct AlertInfo: Identifiable {
+    
+    enum AlertType {
+        case urlNotLoaded
+        case exporterSuccess
+        case exporterFailed
+        case scalingFailed
+    }
+    
+    let id: AlertType
+    let title: String
+    let message: String
+}
+
 class ScaleVideoObservable:ObservableObject {
     
     var videoURL = kDefaultURL
@@ -40,6 +54,7 @@ class ScaleVideoObservable:ObservableObject {
     @Published var progress:Double = 0
     @Published var progressTitle:String = "Progress"
     @Published var isScaling:Bool = false
+    @Published var alertInfo: AlertInfo?
     
     @Published var factor:Double = 1.5 // 0.1 to 2
     @Published var modifier:Double = 0.5 // 0.1 to 1
@@ -381,6 +396,10 @@ class ScaleVideoObservable:ObservableObject {
                     }
                     else {
                         self.scaledVideoURL = kDefaultURL
+                        
+                        var message = (errorMessage ?? "Error message not available")
+                        message += "\nTry different settings (factor, modifer, frame rate)"
+                        self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Failed", message: message)
                     }
                     
                     self.playScaled()

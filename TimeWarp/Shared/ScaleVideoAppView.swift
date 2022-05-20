@@ -26,6 +26,9 @@ struct ScaleVideoAppView: View {
                     PlotView(scaleVideoObservable: scaleVideoObservable)
                 }
             }
+            .alert(item: $scaleVideoObservable.alertInfo, content: { alertInfo in
+                Alert(title: Text(alertInfo.title), message: Text(alertInfo.message))
+            })
         }
     }
 }
