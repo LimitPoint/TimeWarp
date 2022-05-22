@@ -13,22 +13,19 @@ struct HeaderView: View {
     @ObservedObject var scaleVideoObservable: ScaleVideoObservable
     
     var body: some View {
-#if os(macOS)
         VStack {
             Text("Files generated into Documents folder")
                 .fontWeight(.bold)
                 .padding(2)
-            Text("Variably scale video and audio time.")
-            
+                .multilineTextAlignment(.center)
+            Text("Variably scale video time with the instantaneous time scaling function selected below.")
+                .multilineTextAlignment(.center)
+#if os(macOS)
             Button("Go to Documents", action: { 
                 NSWorkspace.shared.open(scaleVideoObservable.documentsURL)
             }).padding(2)
-        }
-#else 
-        Text("Files generated into Documents folder")
-            .fontWeight(.bold)
-            .padding(2)
 #endif
+        }
     }
 }
 
