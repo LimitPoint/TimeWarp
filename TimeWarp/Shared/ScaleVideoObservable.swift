@@ -35,6 +35,7 @@ struct AlertInfo: Identifiable {
         case exporterSuccess
         case exporterFailed
         case scalingFailed
+        case noScaledVideoURL
     }
     
     let id: AlertType
@@ -45,7 +46,7 @@ struct AlertInfo: Identifiable {
 class ScaleVideoObservable:ObservableObject {
     
     var videoURL = kDefaultURL
-    var scaledVideoURL = kDefaultURL
+    var scaledVideoURL:URL?
     var documentsURL:URL
     var scaleVideo:ScaleVideo?
     var videoDocument:VideoDocument?
@@ -271,7 +272,11 @@ class ScaleVideoObservable:ObservableObject {
     }
     
     func playScaled() {
-        play(scaledVideoURL)
+        guard let url = self.scaledVideoURL else {
+            self.alertInfo = AlertInfo(id: .noScaledVideoURL, title: "No Scaled Video", message: "Time scale a video and try again.")
+            return
+        }
+        play(url)
     }
     
     func integrator(_ t:Double) -> Double {
@@ -417,7 +422,11 @@ class ScaleVideoObservable:ObservableObject {
     }
     
     func prepareToExportScaledVideo() {
-        videoDocument = VideoDocument(url:self.scaledVideoURL)
+        guard let url = self.scaledVideoURL else {
+            self.alertInfo = AlertInfo(id: .noScaledVideoURL, title: "No Scaled Video", message: "Time scale a video and try again.")
+            return
+        }
+        videoDocument = VideoDocument(url: url)
     }
     
     func secondsToString(secondsIn:Double) -> String {
