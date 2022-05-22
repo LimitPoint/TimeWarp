@@ -8,7 +8,23 @@
 
 import SwiftUI
 
-struct ScaleOptionsView: View {
+struct PickerView: View {
+    
+    @ObservedObject var scaleVideoObservable: ScaleVideoObservable
+    
+    @State private var isEditing = false
+    
+    var body: some View {
+        Picker("Scaling", selection: $scaleVideoObservable.scalingType) {
+            ForEach(ScaleFunctionType.allCases) { scalingType in
+                Text(scalingType.rawValue)
+            }
+        }
+    }
+}
+
+struct FactorView: View {
+    
     @ObservedObject var scaleVideoObservable: ScaleVideoObservable
     
     @State private var isEditing = false
@@ -18,6 +34,7 @@ struct ScaleOptionsView: View {
         VStack {
             Text(String(format: "%.2f", scaleVideoObservable.factor))
                 .foregroundColor(isEditing ? .red : .blue)
+            
             Slider(
                 value: $scaleVideoObservable.factor,
                 in: 0.1...2
@@ -30,15 +47,21 @@ struct ScaleOptionsView: View {
             } onEditingChanged: { editing in
                 isEditing = editing
             }
+        }
+        
+    }
+}
+
+struct ModiferView: View {
+    
+    @ObservedObject var scaleVideoObservable: ScaleVideoObservable
+    
+    @State private var isEditing = false
+    
+    var body: some View {
+        Group {
             
-            
-            Picker("Scaling", selection: $scaleVideoObservable.scalingType) {
-                ForEach(ScaleFunctionType.allCases) { scalingType in
-                    Text(scalingType.rawValue.capitalized)
-                }
-            }
-            
-            Group {
+            VStack {
                 Text(String(format: "%.2f", scaleVideoObservable.modifier))
                     .foregroundColor(isEditing ? .red : .blue) 
                 Slider(
@@ -53,24 +76,62 @@ struct ScaleOptionsView: View {
                 } onEditingChanged: { editing in
                     isEditing = editing
                 }
-                
             }
-            .opacity((scaleVideoObservable.scalingType != .constant ? 1 : 0))
-            .animation(.easeIn)
             
-            Picker("Frame Rate", selection: $scaleVideoObservable.fps) {
-                Text("24").tag(FPS.twentyFour)
-                Text("30").tag(FPS.thirty)
-                Text("60").tag(FPS.sixty)
-                Text("Any").tag(FPS.any)
-            }
-            .pickerStyle(.segmented)
             
-            Button(action: { scaleVideoObservable.scale() }, label: {
-                Label("Scale", systemImage: "timelapse")
-            })
-            .padding()
+        }
+        .opacity((scaleVideoObservable.scalingType != .constant ? 1 : 0))
+        .animation(.easeIn)
+    }
+}
+
+struct FrameRateView: View {
+    
+    @ObservedObject var scaleVideoObservable: ScaleVideoObservable
+        
+    var body: some View {
+        Picker("Frame Rate", selection: $scaleVideoObservable.fps) {
+            Text("24").tag(FPS.twentyFour)
+            Text("30").tag(FPS.thirty)
+            Text("60").tag(FPS.sixty)
+            Text("Any").tag(FPS.any)
+        }
+        .pickerStyle(.segmented)
+    }
+}
+
+struct ScaleOptionsView: View {
+    @ObservedObject var scaleVideoObservable: ScaleVideoObservable
+    
+    @State private var isEditing = false
+    
+    var body: some View {
+        
+        TabView {
             
+            PickerView(scaleVideoObservable: scaleVideoObservable)
+                .tabItem {
+                    Image(systemName: "function")
+                    Text("Scale Type")
+                }
+            
+            FactorView(scaleVideoObservable: scaleVideoObservable)
+                .tabItem {
+                    Image(systemName: "f.circle.fill")
+                    Text("Factor")
+                }
+            
+            ModiferView(scaleVideoObservable: scaleVideoObservable)
+                .tabItem {
+                    Image(systemName: "m.circle.fill")
+                    Text("Modifer")
+                }
+            
+            FrameRateView(scaleVideoObservable: scaleVideoObservable)
+                .tabItem {
+                    Image(systemName: "speedometer")
+                    Text("Frame Rate")
+                }
         }
         .padding()
     }

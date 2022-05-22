@@ -18,17 +18,27 @@ struct ScaleVideoAppView: View {
             ScaleProgressView(scaleVideoObservable: scaleVideoObservable)
         }
         else {
-            VStack {
-                HeaderView(scaleVideoObservable: scaleVideoObservable)
-                PickVideoView(scaleVideoObservable: scaleVideoObservable)
-                HStack {
-                    ScaleOptionsView(scaleVideoObservable: scaleVideoObservable)
+            ScrollView {
+                VStack {
+                    HeaderView(scaleVideoObservable: scaleVideoObservable)
+                    
+                    PickVideoView(scaleVideoObservable: scaleVideoObservable)
+                    
+                    Button(action: { scaleVideoObservable.scale() }, label: {
+                        Label("Scale", systemImage: "timelapse")
+                    })
+                    
                     PlotView(scaleVideoObservable: scaleVideoObservable)
+                        .frame(minHeight: 300)
+                    
+                    ScaleOptionsView(scaleVideoObservable: scaleVideoObservable)
+                        .frame(minHeight: 300)
                 }
+                .alert(item: $scaleVideoObservable.alertInfo, content: { alertInfo in
+                    Alert(title: Text(alertInfo.title), message: Text(alertInfo.message))
+                })
             }
-            .alert(item: $scaleVideoObservable.alertInfo, content: { alertInfo in
-                Alert(title: Text(alertInfo.title), message: Text(alertInfo.message))
-            })
+            
         }
     }
 }

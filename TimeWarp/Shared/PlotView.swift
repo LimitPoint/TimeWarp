@@ -71,9 +71,7 @@ extension View {
 struct PlotView: View {
     
     @ObservedObject var scaleVideoObservable: ScaleVideoObservable
-    
-    let coordinateSpace = CoordinateSpace.named("PlotView")
-    
+        
     var body: some View {
         
         VStack {
@@ -82,12 +80,13 @@ struct PlotView: View {
                     .stroke(Color.blue, style: StrokeStyle(lineWidth: 1, lineCap: .round, lineJoin: .round))
                     .scaleEffect(CGSize(width: 0.9, height: 0.9))
             }
-            .coordinateSpace(name: "PlotView")
             .currentSizeReader(currentSize: $scaleVideoObservable.scalingPathViewFrameSize)
             
             Text("Time Scale on [0,1] to [\(String(format: "%.2f", scaleVideoObservable.minimum_y)), \(String(format: "%.2f", scaleVideoObservable.maximum_y))]\nExpected Scaled Duration: \(scaleVideoObservable.expectedScaledDuration)")
                 .font(.caption)
                 .padding()
+            
+             Text(scaleVideoObservable.scalingType.rawValue)
         }
         
     }

@@ -27,6 +27,7 @@ struct PickVideoView: View {
             })
             
             VideoPlayer(player: scaleVideoObservable.player)
+                .frame(minHeight: 300)
             
             Text(scaleVideoObservable.videoURL.lastPathComponent)
             
