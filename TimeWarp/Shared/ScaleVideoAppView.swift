@@ -13,7 +13,6 @@ struct ScaleVideoAppView: View {
     @ObservedObject var scaleVideoObservable:ScaleVideoObservable 
     
     var body: some View {
-        
         if scaleVideoObservable.isScaling {
             ScaleProgressView(scaleVideoObservable: scaleVideoObservable)
         }
@@ -38,7 +37,6 @@ struct ScaleVideoAppView: View {
                     Alert(title: Text(alertInfo.title), message: Text(alertInfo.message))
                 })
             }
-            
         }
     }
 }

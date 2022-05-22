@@ -30,7 +30,6 @@ struct FactorView: View {
     @State private var isEditing = false
     
     var body: some View {
-        
         VStack {
             Text(String(format: "%.2f", scaleVideoObservable.factor))
                 .foregroundColor(isEditing ? .red : .blue)
@@ -48,7 +47,6 @@ struct FactorView: View {
                 isEditing = editing
             }
         }
-        
     }
 }
 
@@ -59,8 +57,11 @@ struct ModiferView: View {
     @State private var isEditing = false
     
     var body: some View {
-        Group {
-            
+        
+        if scaleVideoObservable.scalingType == .constant {
+            Text("Constant time scaling has no modifer.")
+        }
+        else {
             VStack {
                 Text(String(format: "%.2f", scaleVideoObservable.modifier))
                     .foregroundColor(isEditing ? .red : .blue) 
@@ -77,11 +78,7 @@ struct ModiferView: View {
                     isEditing = editing
                 }
             }
-            
-            
         }
-        .opacity((scaleVideoObservable.scalingType != .constant ? 1 : 0))
-        .animation(.easeIn)
     }
 }
 
@@ -90,13 +87,19 @@ struct FrameRateView: View {
     @ObservedObject var scaleVideoObservable: ScaleVideoObservable
         
     var body: some View {
-        Picker("Frame Rate", selection: $scaleVideoObservable.fps) {
-            Text("24").tag(FPS.twentyFour)
-            Text("30").tag(FPS.thirty)
-            Text("60").tag(FPS.sixty)
-            Text("Any").tag(FPS.any)
+        VStack {
+            Picker("Frame Rate", selection: $scaleVideoObservable.fps) {
+                Text("24").tag(FPS.twentyFour)
+                Text("30").tag(FPS.thirty)
+                Text("60").tag(FPS.sixty)
+                Text("Any").tag(FPS.any)
+            }
+            .pickerStyle(.segmented)
+            
+            Text("\'Any\' is variable rate and can produce smoother videos. However it is possible scaling can lead to frame rates so high that some video players will play the video as slow motion.")
+                .font(.caption)
+                .padding()
         }
-        .pickerStyle(.segmented)
     }
 }
 
@@ -106,9 +109,7 @@ struct ScaleOptionsView: View {
     @State private var isEditing = false
     
     var body: some View {
-        
         TabView {
-            
             PickerView(scaleVideoObservable: scaleVideoObservable)
                 .tabItem {
                     Image(systemName: "function")
