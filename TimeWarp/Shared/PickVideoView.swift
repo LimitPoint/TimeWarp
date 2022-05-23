@@ -22,9 +22,25 @@ struct PickVideoView: View {
     
     var body: some View {
         VStack {
-            Button(action: { showFileImporter = true }, label: {
-                Label("Import", systemImage: "square.and.arrow.down")
-            })
+            
+            HStack {
+                Button(action: { showFileImporter = true }, label: {
+                    Label("Import", systemImage: "square.and.arrow.down")
+                })
+                
+                Button(action: { scaleVideoObservable.loadAndPlayURL(kDefaultURL) }, label: {
+                    Label("Default", systemImage: "cube.fill")
+                })
+                
+                Button(action: { scaleVideoObservable.loadAndPlayURL(kFireworksURL) }, label: {
+                    Label("Fireworks", systemImage: "flame")
+                })
+                
+                Button(action: { scaleVideoObservable.loadAndPlayURL(kTwistsURL) }, label: {
+                    Label("Music", systemImage: "music.note")
+                })
+            }
+            
             
             VideoPlayer(player: scaleVideoObservable.player)
                 .frame(minHeight: 300)

@@ -16,7 +16,7 @@ struct PickerView: View {
     
     var body: some View {
         VStack {
-            Text("Choose an instantaneous time scaling function.")
+            Text("Select an instantaneous time scaling function.")
             
             Picker("Scaling", selection: $scaleVideoObservable.scalingType) {
                 ForEach(ScaleFunctionType.allCases) { scalingType in

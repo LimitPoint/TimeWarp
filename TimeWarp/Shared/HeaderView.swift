@@ -18,7 +18,7 @@ struct HeaderView: View {
                 .fontWeight(.bold)
                 .padding(2)
                 .multilineTextAlignment(.center)
-            Text("Variably scale video time with the instantaneous time scaling function selected below.")
+            Text("Select instantaneous time scaling function below.")
                 .multilineTextAlignment(.center)
 #if os(macOS)
             Button("Go to Documents", action: { 

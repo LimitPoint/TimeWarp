@@ -19,6 +19,10 @@
 		CD734B8F27E672E60048D193 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CD734B8E27E672E60048D193 /* Credits.rtf */; };
 		CD7741E327EA63B400715681 /* VideoWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7741E227EA63B400715681 /* VideoWriter.swift */; };
 		CD7741E427EA63B400715681 /* VideoWriter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD7741E227EA63B400715681 /* VideoWriter.swift */; };
+		CD7CFAD4283C14C100B98E3A /* Twists.mov in Resources */ = {isa = PBXBuildFile; fileRef = CD7CFAD2283C14C100B98E3A /* Twists.mov */; };
+		CD7CFAD5283C14C100B98E3A /* Twists.mov in Resources */ = {isa = PBXBuildFile; fileRef = CD7CFAD2283C14C100B98E3A /* Twists.mov */; };
+		CD7CFAD6283C14C100B98E3A /* Fireworks.mov in Resources */ = {isa = PBXBuildFile; fileRef = CD7CFAD3283C14C100B98E3A /* Fireworks.mov */; };
+		CD7CFAD7283C14C100B98E3A /* Fireworks.mov in Resources */ = {isa = PBXBuildFile; fileRef = CD7CFAD3283C14C100B98E3A /* Fireworks.mov */; };
 		CD8FD1DB27E13D1A00D1FC54 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8FD1DA27E13D1A00D1FC54 /* HeaderView.swift */; };
 		CD8FD1DC27E13D1A00D1FC54 /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CD8FD1DA27E13D1A00D1FC54 /* HeaderView.swift */; };
 		CDB0EFA827DE3C2E00FB2EB6 /* ScaleVideoApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDB0EF9827DE3C2C00FB2EB6 /* ScaleVideoApp.swift */; };
@@ -57,6 +61,8 @@
 		CD734B8C27E66C200048D193 /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		CD734B8E27E672E60048D193 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
 		CD7741E227EA63B400715681 /* VideoWriter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoWriter.swift; sourceTree = "<group>"; };
+		CD7CFAD2283C14C100B98E3A /* Twists.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Twists.mov; sourceTree = "<group>"; };
+		CD7CFAD3283C14C100B98E3A /* Fireworks.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = Fireworks.mov; sourceTree = "<group>"; };
 		CD8FD1DA27E13D1A00D1FC54 /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		CDB0EF9827DE3C2C00FB2EB6 /* ScaleVideoApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleVideoApp.swift; sourceTree = "<group>"; };
 		CDB0EF9927DE3C2C00FB2EB6 /* ScaleVideoAppView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScaleVideoAppView.swift; sourceTree = "<group>"; };
@@ -136,6 +142,8 @@
 				CD055169281F18B700A41D94 /* PlotView.swift */,
 				CD470508282DFA85004A1378 /* ScaleVideo.png */,
 				CDB0EFB927DE61D200FB2EB6 /* DefaultVideo.mov */,
+				CD7CFAD3283C14C100B98E3A /* Fireworks.mov */,
+				CD7CFAD2283C14C100B98E3A /* Twists.mov */,
 				CDB0EF9A27DE3C2E00FB2EB6 /* Assets.xcassets */,
 			);
 			path = Shared;
@@ -239,6 +247,8 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD7CFAD6283C14C100B98E3A /* Fireworks.mov in Resources */,
+				CD7CFAD4283C14C100B98E3A /* Twists.mov in Resources */,
 				CD470509282DFA85004A1378 /* ScaleVideo.png in Resources */,
 				CDB0EFBA27DE61D200FB2EB6 /* DefaultVideo.mov in Resources */,
 				CDB0EFAC27DE3C2E00FB2EB6 /* Assets.xcassets in Resources */,
@@ -250,8 +260,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD47050A282DFA85004A1378 /* ScaleVideo.png in Resources */,
+				CD7CFAD7283C14C100B98E3A /* Fireworks.mov in Resources */,
 				CDB0EFBB27DE61D200FB2EB6 /* DefaultVideo.mov in Resources */,
 				CDB0EFAD27DE3C2E00FB2EB6 /* Assets.xcassets in Resources */,
+				CD7CFAD5283C14C100B98E3A /* Twists.mov in Resources */,
 				CD734B8F27E672E60048D193 /* Credits.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

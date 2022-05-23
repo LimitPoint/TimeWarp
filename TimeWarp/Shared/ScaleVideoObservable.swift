@@ -12,6 +12,8 @@ import AVFoundation
 import Combine
 
 let kDefaultURL = Bundle.main.url(forResource: "DefaultVideo", withExtension: "mov")!
+let kFireworksURL = Bundle.main.url(forResource: "Fireworks", withExtension: "mov")!
+let kTwistsURL = Bundle.main.url(forResource: "Twists", withExtension: "mov")!
 
 enum FPS: Int, CaseIterable, Identifiable {
     case any = 0, twentyFour = 24, thirty = 30, sixty = 60
@@ -233,6 +235,11 @@ class ScaleVideoObservable:ObservableObject {
         }
     }
     
+    func loadAndPlayURL(_ url:URL) {
+        self.videoURL = url
+        self.play(url)
+    }
+    
     func loadSelectedURL(_ url:URL, completion: @escaping (Bool) -> ()) {
         
         let scoped = url.startAccessingSecurityScopedResource()
@@ -245,9 +252,7 @@ class ScaleVideoObservable:ObservableObject {
             
             DispatchQueue.main.async {
                 if let copiedURL = copiedURL {
-                    self.videoURL = copiedURL
-                    
-                    self.play(copiedURL)
+                    self.loadAndPlayURL(copiedURL)
                     completion(true)
                 }
                 else {
@@ -421,7 +426,7 @@ class ScaleVideoObservable:ObservableObject {
                         self.printDurations(resultURL)
                         
                         if self.scaleVideo?.outOfOrder == true {
-                            var message = "Scaling produced out of order presentation times.\nTry different settings for factor, modifer or frame rate."
+                            let message = "Scaling produced out of order presentation times.\nTry different settings for factor, modifer or frame rate."
                             self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Failed", message: message)
                         }
                     }
@@ -485,7 +490,6 @@ class ScaleVideoObservable:ObservableObject {
         expectedScaledDuration = secondsToString(secondsIn: scaleFactor * assetDurationSeconds)
     }
     
-    // Use look up table with interpolation to map scaled video time to input video time (in unit interval [0,1]) for displaying player time indicator on the plot of the time scaling function
     func lookupTime(_ time:Double) -> Double? {
         
         guard scalingLUT.count > 0 else {
