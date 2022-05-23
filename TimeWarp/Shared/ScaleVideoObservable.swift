@@ -322,6 +322,32 @@ class ScaleVideoObservable:ObservableObject {
         return value ?? 1
     }
     
+    func printDurations(_ resultURL:URL) {
+        let assetresult = AVAsset(url: resultURL)
+        
+        if let videoTrack = assetresult.tracks(withMediaType: .video).first {
+            let videoTrackDuration = CMTimeGetSeconds(videoTrack.timeRange.duration)
+            print("scaled video duration = \(videoTrackDuration)")
+        }
+        
+        if let audioTrack = assetresult.tracks(withMediaType: .audio).first {
+            let audioTrackDuration = CMTimeGetSeconds(audioTrack.timeRange.duration)
+            print("scaled audio duration = \(audioTrackDuration)")
+        }
+        
+        let assetinput = AVAsset(url: self.videoURL)
+        
+        if let videoTrack = assetinput.tracks(withMediaType: .video).first {
+            let videoTrackDuration = CMTimeGetSeconds(videoTrack.timeRange.duration)
+            print("original video duration = \(videoTrackDuration)")
+        }
+        
+        if let audioTrack = assetinput.tracks(withMediaType: .audio).first {
+            let audioTrackDuration = CMTimeGetSeconds(audioTrack.timeRange.duration)
+            print("original audio duration  = \(audioTrackDuration)")
+        }
+    }
+    
     func scale() {
         
         self.player.pause()
@@ -383,30 +409,7 @@ class ScaleVideoObservable:ObservableObject {
                     
                     if let resultURL = resultURL, self.scaleVideo?.isCancelled == false {
                         self.scaledVideoURL = resultURL
-                        
-                        let assetresult = AVAsset(url: resultURL)
-                        
-                        if let videoTrack = assetresult.tracks(withMediaType: .video).first {
-                            let videoTrackDuration = CMTimeGetSeconds(videoTrack.timeRange.duration)
-                            print("scaled video duration = \(videoTrackDuration)")
-                        }
-                        
-                        if let audioTrack = assetresult.tracks(withMediaType: .audio).first {
-                            let audioTrackDuration = CMTimeGetSeconds(audioTrack.timeRange.duration)
-                            print("scaled audio duration = \(audioTrackDuration)")
-                        }
-                        
-                        let assetinput = AVAsset(url: self.videoURL)
-                        
-                        if let videoTrack = assetinput.tracks(withMediaType: .video).first {
-                            let videoTrackDuration = CMTimeGetSeconds(videoTrack.timeRange.duration)
-                            print("original video duration = \(videoTrackDuration)")
-                        }
-                        
-                        if let audioTrack = assetinput.tracks(withMediaType: .audio).first {
-                            let audioTrackDuration = CMTimeGetSeconds(audioTrack.timeRange.duration)
-                            print("original audio duration  = \(audioTrackDuration)")
-                        }
+                        self.printDurations(resultURL)
                     }
                     else {
                         self.scaledVideoURL = kDefaultURL

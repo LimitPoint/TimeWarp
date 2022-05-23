@@ -136,10 +136,6 @@ class ControlBlocks {
                 return nil 
             }
             
-            if audioIndex == count-1 {
-                print("")
-            }
-            
             audioIndex += 1
             
             if audioIndex % Int(sampleRate) == 0 { // throttle rate of sending progress
