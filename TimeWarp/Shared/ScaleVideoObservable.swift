@@ -356,6 +356,7 @@ class ScaleVideoObservable:ObservableObject {
         self.player.pause()
         
         isScaling = true
+        scalingLUT.removeAll()
         
         let filename = self.videoURL.deletingPathExtension().lastPathComponent + "-scaled.mov"
         
@@ -481,6 +482,10 @@ class ScaleVideoObservable:ObservableObject {
     
     // Use look up table with interpolation to map scaled video time to input video time (in unit interval [0,1]) for displaying player time indicator on the plot of the time scaling function
     func lookupTime(_ time:Double) -> Double? {
+        
+        guard scalingLUT.count > 0 else {
+            return nil
+        }
         
         var value:Double?
         
