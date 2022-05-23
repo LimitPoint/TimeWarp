@@ -45,7 +45,12 @@ struct AlertInfo: Identifiable {
 
 class ScaleVideoObservable:ObservableObject {
     
-    var videoURL = kDefaultURL
+    var videoURL:URL {
+        didSet {
+            self.videoDuration = AVAsset(url: videoURL).duration.seconds
+        }
+    }
+    var videoDuration:Double = 0
     var scaledVideoURL:URL?
     var documentsURL:URL
     var scaleVideo:ScaleVideo?
@@ -76,6 +81,10 @@ class ScaleVideoObservable:ObservableObject {
     @Published var currentPlayerTime:Double?
     
     init() {
+        
+        videoURL = kDefaultURL
+        videoDuration = AVAsset(url: videoURL).duration.seconds
+        
         player = AVPlayer(url: videoURL)
         
         documentsURL = try! FileManager.default.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
