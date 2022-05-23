@@ -238,6 +238,8 @@ class ScaleVideo : VideoWriter {
     
     var ciOrientationTransform:CGAffineTransform = CGAffineTransform.identity
     
+    var scalingLUT:[CGPoint] = []
+    
     func timeScale(_ t:Double) -> Double?
     {     
         var resultValue:Double?
@@ -346,7 +348,13 @@ class ScaleVideo : VideoWriter {
         
         if self.videoReaderOutput.outputSettings != nil {
             var presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
-            if let presentationTimeStampScaled = self.timeScale(presentationTimeStamp.seconds) {
+            
+            let timeToScale:Double = presentationTimeStamp.seconds
+            
+            if let presentationTimeStampScaled = self.timeScale(timeToScale) {
+                
+                scalingLUT.append(CGPoint(x: presentationTimeStampScaled, y: timeToScale))
+                
                 presentationTimeStamp = CMTimeMakeWithSeconds(presentationTimeStampScaled, preferredTimescale: 64000)
                 if let adjustedSampleBuffer = sampleBuffer.setTimeStamp(time: presentationTimeStamp) {
                     self.sampleBufferPresentationTime = presentationTimeStamp
@@ -466,7 +474,13 @@ class ScaleVideo : VideoWriter {
                     }
                     
                     var presentationTimeStamp = CMSampleBufferGetPresentationTimeStamp(sampleBuffer)
-                    if let presentationTimeStampScaled = self.timeScale(presentationTimeStamp.seconds) {
+                    
+                    let timeToScale:Double = presentationTimeStamp.seconds
+                    
+                    if let presentationTimeStampScaled = self.timeScale(timeToScale) {
+                        
+                        self.scalingLUT.append(CGPoint(x: presentationTimeStampScaled, y: timeToScale))
+                        
                         presentationTimeStamp = CMTimeMakeWithSeconds(presentationTimeStampScaled, preferredTimescale: 64000)
                         if let adjustedSampleBuffer = sampleBuffer.setTimeStamp(time: presentationTimeStamp) {
                             self.sampleBuffer = adjustedSampleBuffer

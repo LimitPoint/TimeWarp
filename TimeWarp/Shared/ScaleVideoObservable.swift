@@ -72,6 +72,9 @@ class ScaleVideoObservable:ObservableObject {
     @Published var expectedScaledDuration:String = ""
     @Published var scalingPathViewFrameSize:CGSize = .zero
     @Published var scalingType:ScaleFunctionType = .doubleSmoothstep
+    var periodicTimeObserver:Any?
+    var playingScaled = false
+    var scalingLUT:[CGPoint] = []
     var cancelBag = Set<AnyCancellable>()
     
     var errorMesssage:String?
@@ -254,9 +257,9 @@ class ScaleVideoObservable:ObservableObject {
         }
     }
     
-    var periodicTimeObserver:Any?
-    
     func play(_ url:URL) {
+        
+        playingScaled = ( url == scaledVideoURL ? true : false)
         
         if let periodicTimeObserver = periodicTimeObserver {
             self.player.removeTimeObserver(periodicTimeObserver)
@@ -409,6 +412,11 @@ class ScaleVideoObservable:ObservableObject {
                     
                     if let resultURL = resultURL, self.scaleVideo?.isCancelled == false {
                         self.scaledVideoURL = resultURL
+                        
+                        if let scalingLUT = self.scaleVideo?.scalingLUT {
+                            self.scalingLUT.append(contentsOf: scalingLUT)
+                        }
+                        
                         self.printDurations(resultURL)
                     }
                     else {
@@ -471,6 +479,38 @@ class ScaleVideoObservable:ObservableObject {
         expectedScaledDuration = secondsToString(secondsIn: scaleFactor * assetDurationSeconds)
     }
     
+    // Use look up table with interpolation to map scaled video time to input video time (in unit interval [0,1]) for displaying player time indicator on the plot of the time scaling function
+    func lookupTime(_ time:Double) -> Double? {
+        
+        var value:Double?
+        
+        let lastTime = scalingLUT[scalingLUT.count-1].y
+        
+            // find range of scaledTime in scalingLUT, return interpolated value
+        for i in 0...scalingLUT.count-2 {
+            if scalingLUT[i].x <= time && scalingLUT[i+1].x >= time {
+                
+                let d = scalingLUT[i+1].x - scalingLUT[i].x
+                
+                if d > 0 {
+                    value = ((scalingLUT[i].y + (time - scalingLUT[i].x) * (scalingLUT[i+1].y - scalingLUT[i].y) / d)) / lastTime
+                }
+                else {
+                    value = scalingLUT[i].y / lastTime
+                }
+                
+                break
+            }
+        }
+        
+        // time may overflow end of table, use 1
+        if value == nil {
+            value = 1
+        }
+    
+        return value
+    }
+    
     func updatePath() {
         
         var scalingFunction:(Double)->Double
@@ -495,8 +535,17 @@ class ScaleVideoObservable:ObservableObject {
         }
         
         var currentTime:Double = 0
-        if let time = self.currentPlayerTime, let duration = self.currentPlayerDuration {
-            currentTime = time / duration
+        if let time = self.currentPlayerTime {
+            
+            if playingScaled {
+                if let lut = lookupTime(time) {
+                    currentTime = lut
+                }
+            }
+            else {
+                currentTime = time / self.videoDuration
+            }
+            
         }
         
         (scalingPath, minimum_y, maximum_y) = path(a: 0, b: 1, time:currentTime, subdivisions: Int(scalingPathViewFrameSize.width), frameSize: scalingPathViewFrameSize, function:scalingFunction)
