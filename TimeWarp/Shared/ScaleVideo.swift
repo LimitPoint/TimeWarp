@@ -713,7 +713,7 @@ class ScaleVideo : VideoWriter {
         audioWriterInput.requestMediaDataWhenReady(on: serialQueue) {
             while audioWriterInput.isReadyForMoreMediaData, self.writingAudioFinished == false {
                 
-                guard self.isCancelled == false else {
+                guard self.isCancelled == false, self.outOfOrder == false else {
                     self.audioReader?.cancelReading()
                     self.finishAudioWriting()
                     return
