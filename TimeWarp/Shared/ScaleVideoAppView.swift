@@ -23,12 +23,12 @@ struct ScaleVideoAppView: View {
                     
                     PickVideoView(scaleVideoObservable: scaleVideoObservable)
                     
+                    PlotView(scaleVideoObservable: scaleVideoObservable)
+                        .frame(minHeight: 300)
+                    
                     Button(action: { scaleVideoObservable.scale() }, label: {
                         Label("Scale", systemImage: "timelapse")
                     })
-                    
-                    PlotView(scaleVideoObservable: scaleVideoObservable)
-                        .frame(minHeight: 300)
                     
                     ScaleOptionsView(scaleVideoObservable: scaleVideoObservable)
                         .frame(minHeight: 300)

@@ -86,7 +86,13 @@ struct PlotView: View {
                 .font(.caption)
                 .padding()
             
-             Text(scaleVideoObservable.scalingType.rawValue)
+            if scaleVideoObservable.fps.rawValue == 0 {
+                Text("\(scaleVideoObservable.scalingType.rawValue) @ Any FPS")
+            }
+            else {
+                Text("\(scaleVideoObservable.scalingType.rawValue) @ \(scaleVideoObservable.fps.rawValue) FPS")
+            }
+             
         }
         
     }
