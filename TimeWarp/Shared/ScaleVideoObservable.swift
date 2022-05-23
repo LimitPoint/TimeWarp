@@ -419,12 +419,17 @@ class ScaleVideoObservable:ObservableObject {
                         }
                         
                         self.printDurations(resultURL)
+                        
+                        if self.scaleVideo?.outOfOrder == true {
+                            var message = "Scaling produced out of order presentation times.\nTry different settings for factor, modifer or frame rate."
+                            self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Failed", message: message)
+                        }
                     }
                     else {
                         self.scaledVideoURL = kDefaultURL
                         
                         var message = (errorMessage ?? "Error message not available")
-                        message += "\nTry different settings (factor, modifer, frame rate)"
+                        message += "\nTry different settings for factor, modifer or frame rate."
                         self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Failed", message: message)
                     }
                     

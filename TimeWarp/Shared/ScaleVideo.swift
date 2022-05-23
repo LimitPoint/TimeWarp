@@ -240,6 +240,10 @@ class ScaleVideo : VideoWriter {
     
     var scalingLUT:[CGPoint] = []
     
+    // error checking for scaling
+    var lastPresentationTime:Double = -1
+    var outOfOrder:Bool = false
+    
     func timeScale(_ t:Double) -> Double?
     {     
         var resultValue:Double?
@@ -478,6 +482,15 @@ class ScaleVideo : VideoWriter {
                     let timeToScale:Double = presentationTimeStamp.seconds
                     
                     if let presentationTimeStampScaled = self.timeScale(timeToScale) {
+                        
+                        guard presentationTimeStampScaled > self.lastPresentationTime else {
+                            self.outOfOrder = true
+                            self.videoReader?.cancelReading()
+                            self.finishVideoWriting()
+                            return
+                        }
+                        
+                        self.lastPresentationTime = presentationTimeStampScaled
                         
                         self.scalingLUT.append(CGPoint(x: presentationTimeStampScaled, y: timeToScale))
                         
