@@ -415,8 +415,9 @@ class ScaleVideoObservable:ObservableObject {
                 DispatchQueue.main.async {
                     
                     self.progress = 0
+                    self.isScaling = false
                     
-                    if let resultURL = resultURL, self.scaleVideo?.isCancelled == false {
+                    if let resultURL = resultURL, self.scaleVideo?.isCancelled == false, self.scaleVideo?.outOfOrder == false {
                         self.scaledVideoURL = resultURL
                         
                         if let scalingLUT = self.scaleVideo?.scalingLUT {
@@ -425,22 +426,21 @@ class ScaleVideoObservable:ObservableObject {
                         
                         self.printDurations(resultURL)
                         
-                        if self.scaleVideo?.outOfOrder == true {
-                            let message = "Scaling produced out of order presentation times.\nTry different settings for factor, modifer or frame rate."
+                        self.playScaled()
+                    }
+                    else {
+                        if self.scaleVideo?.isCancelled == true {
+                            self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Cancelled", message: "The operation was cancelled.")
+                        }
+                        else if self.scaleVideo?.outOfOrder == true {
+                            self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Failed", message: "Scaling produced out of order presentation times.\n\nTry different settings for factor, modifer or frame rate.")
+                        }
+                        else {
+                            var message = (errorMessage ?? "Error message not available")
+                            message += "\n\nTry different settings for factor, modifer or frame rate."
                             self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Failed", message: message)
                         }
                     }
-                    else {
-                        self.scaledVideoURL = kDefaultURL
-                        
-                        var message = (errorMessage ?? "Error message not available")
-                        message += "\nTry different settings for factor, modifer or frame rate."
-                        self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Failed", message: message)
-                    }
-                    
-                    self.playScaled()
-                    
-                    self.isScaling = false
                 }
             })
             
