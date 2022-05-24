@@ -16,11 +16,13 @@ struct PickerView: View {
     
     var body: some View {
         VStack {
-            Text("Select an instantaneous time scaling function.")
-            
-            Text("Use Factor and Modifier parameters to customize it.")
-                .font(.caption)
-                .padding(1)
+            Group {
+                Text("Select an instantaneous time scaling function.")
+                Text("Use Factor and Modifier parameters to customize it.")
+            }
+            .font(.subheadline)
+            .padding(1)
+                
             
             Picker("Scaling", selection: $scaleVideoObservable.scalingType) {
                 ForEach(ScaleFunctionType.allCases) { scalingType in
