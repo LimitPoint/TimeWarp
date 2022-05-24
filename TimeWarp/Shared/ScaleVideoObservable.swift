@@ -484,11 +484,19 @@ class ScaleVideoObservable:ObservableObject {
     
     func updateExpectedScaledDuration() {
         
-        let assetDurationSeconds = AVAsset(url: videoURL).duration.seconds
+        let videoAsset = AVAsset(url: videoURL)
+        let assetDurationSeconds = videoAsset.duration.seconds
         
         let scaleFactor = integrator(1)
         
-        expectedScaledDuration = secondsToString(secondsIn: scaleFactor * assetDurationSeconds)
+        let scaledDuration = scaleFactor * assetDurationSeconds
+        
+        expectedScaledDuration = secondsToString(secondsIn: scaledDuration)
+        
+        let estimatedFrameCount = videoAsset.estimatedFrameCount()
+        let estimatedFrameRate = Double(estimatedFrameCount) / scaledDuration
+        
+        expectedScaledDuration += " (\(String(format: "%.2f", estimatedFrameRate)) FPS)"
     }
     
     func lookupTime(_ time:Double) -> Double? {
