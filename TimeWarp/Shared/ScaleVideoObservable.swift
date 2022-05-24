@@ -457,6 +457,7 @@ class ScaleVideoObservable:ObservableObject {
             self.alertInfo = AlertInfo(id: .noScaledVideoURL, title: "No Scaled Video", message: "Time scale a video and try again.")
             return
         }
+        self.player.pause() // export alert can't be dismissed while video is playing.
         videoDocument = VideoDocument(url: url)
     }
     
