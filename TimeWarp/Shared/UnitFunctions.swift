@@ -148,7 +148,7 @@ func triangle(_ t:Double, from:Double = 1, to:Double = 2, range:ClosedRange<Doub
 }
 
 func cosine(_ t:Double, factor:Double, modifier:Double) -> Double {
-    factor * cos(12 * modifier * .pi * t) + 1
+    factor * (cos(12 * modifier * .pi * t) + 1) + (factor / 2)
 }
 
 func tapered_cosine(_ t:Double, factor:Double, modifier:Double) -> Double {
@@ -160,7 +160,7 @@ func constant(_ t:Double, factor:Double) -> Double {
 }
 
 func power(_ t:Double, factor:Double, modifier:Double) -> Double {
-    return 2 * modifier * pow(t, factor)
+    return 2 * modifier * pow(t, factor) + (modifier / 2)
 }
 
 // MARK: Integration
