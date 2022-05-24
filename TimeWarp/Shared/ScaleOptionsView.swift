@@ -23,7 +23,6 @@ struct PickerView: View {
             .font(.subheadline)
             .padding(1)
                 
-            
             Picker("Scaling", selection: $scaleVideoObservable.scalingType) {
                 ForEach(ScaleFunctionType.allCases) { scalingType in
                     Text(scalingType.rawValue)

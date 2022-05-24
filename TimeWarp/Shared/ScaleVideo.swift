@@ -11,6 +11,8 @@ import AVFoundation
 import CoreImage
 import Accelerate
 
+let kPreferredTimeScale:Int32 = 64000
+
 extension Array where Element == Int16  {
     
     func scaleToD(control:[Double]) -> [Element] {
@@ -233,7 +235,7 @@ class ScaleVideo : VideoWriter {
     var frameDuration:CMTime?
     var currentTime:CMTime = CMTime.zero
     
-    var progressFactor:CGFloat = 1.0/3.0 // 3 contributors - 1 if no audio
+    var progressFactor:CGFloat = 1.0/3.0 // 3 contributors - only 1 if no audio
     var cumulativeProgress:CGFloat = 0
     
     var ciOrientationTransform:CGAffineTransform = CGAffineTransform.identity
@@ -359,7 +361,7 @@ class ScaleVideo : VideoWriter {
                 
                 scalingLUT.append(CGPoint(x: presentationTimeStampScaled, y: timeToScale))
                 
-                presentationTimeStamp = CMTimeMakeWithSeconds(presentationTimeStampScaled, preferredTimescale: 64000)
+                presentationTimeStamp = CMTimeMakeWithSeconds(presentationTimeStampScaled, preferredTimescale: kPreferredTimeScale)
                 if let adjustedSampleBuffer = sampleBuffer.setTimeStamp(time: presentationTimeStamp) {
                     self.sampleBufferPresentationTime = presentationTimeStamp
                     self.sampleBuffer = adjustedSampleBuffer
@@ -494,7 +496,7 @@ class ScaleVideo : VideoWriter {
                         
                         self.scalingLUT.append(CGPoint(x: presentationTimeStampScaled, y: timeToScale))
                         
-                        presentationTimeStamp = CMTimeMakeWithSeconds(presentationTimeStampScaled, preferredTimescale: 64000)
+                        presentationTimeStamp = CMTimeMakeWithSeconds(presentationTimeStampScaled, preferredTimescale: kPreferredTimeScale)
                         if let adjustedSampleBuffer = sampleBuffer.setTimeStamp(time: presentationTimeStamp) {
                             self.sampleBuffer = adjustedSampleBuffer
                         }
