@@ -16,18 +16,15 @@ struct PickerView: View {
     
     var body: some View {
         VStack {
-            Group {
-                Text("Select an instantaneous time scaling function.")
-                Text("Use Factor and Modifier parameters to customize it.")
-            }
-            .font(.subheadline)
-            .padding(1)
-                
             Picker("Scaling", selection: $scaleVideoObservable.scalingType) {
                 ForEach(ScaleFunctionType.allCases) { scalingType in
                     Text(scalingType.rawValue)
                 }
             }
+            
+            Text("Select an instantaneous time scaling function.\nUse Factor and Modifier parameters to customize it.")
+                .font(.caption)
+                .padding(1)
         }
     }
 }
@@ -55,6 +52,10 @@ struct FactorView: View {
             } onEditingChanged: { editing in
                 isEditing = editing
             }
+            
+            Text("See plot above to see effect of factor on it.")
+                .font(.caption)
+                .padding()
         }
     }
 }
@@ -86,6 +87,10 @@ struct ModiferView: View {
                 } onEditingChanged: { editing in
                     isEditing = editing
                 }
+                
+                Text("See plot above to see effect of modifier on it.")
+                    .font(.caption)
+                    .padding()
             }
         }
     }
@@ -105,7 +110,7 @@ struct FrameRateView: View {
             }
             .pickerStyle(.segmented)
             
-            Text("\'Any\' is the natural rate due to variable scaling. Fixed rates are achieved by resampling.")
+            Text("\'Any\' is the natural rate due to variable scaling. Fixed rates are achieved by resampling.\n\nSee estimated FPS in plot caption above.")
                 .font(.caption)
                 .padding()
         }
