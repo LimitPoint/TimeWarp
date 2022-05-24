@@ -11,6 +11,7 @@ import AVFoundation
 import CoreImage
 import Accelerate
 
+// The denominator of a fractional approximation to a decimal number
 let kPreferredTimeScale:Int32 = 64000
 
 extension Array where Element == Int16  {
@@ -41,8 +42,6 @@ extension Array where Element == Int16  {
                     &result, stride,
                     vDSP_Length(length),
                     vDSP_Length(double_array.count))
-        
-        
         
         return vDSP.floatingPointToInteger(result, integerType: Int16.self, rounding: .towardNearestInteger)
     }
@@ -75,7 +74,6 @@ extension Array where Element == Int16  {
             if let channel = self.extract_array_channel(channelIndex: channel_index, channelCount: channelCount) {
                 channels.append(channel)
             }
-            
         }
         
         return channels
