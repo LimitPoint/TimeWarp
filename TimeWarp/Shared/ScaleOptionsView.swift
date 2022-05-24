@@ -18,15 +18,15 @@ struct PickerView: View {
         VStack {
             Text("Select an instantaneous time scaling function.")
             
+            Text("Use Factor and Modifier parameters to customize it.")
+                .font(.caption)
+                .padding(1)
+            
             Picker("Scaling", selection: $scaleVideoObservable.scalingType) {
                 ForEach(ScaleFunctionType.allCases) { scalingType in
                     Text(scalingType.rawValue)
                 }
             }
-            
-            Text("Use Factor and Modifier parameters to customize it.")
-                .font(.caption)
-                .padding(1)
         }
     }
 }
@@ -104,7 +104,7 @@ struct FrameRateView: View {
             }
             .pickerStyle(.segmented)
             
-            Text("\'Any\' is variable rate and can produce smoother videos. However it is possible scaling can lead to frame rates so high that some video players will play the video as slow motion.")
+            Text("\'Any\' is the natural rate due to variable scaling. Fixed rates are achieved by resampling.")
                 .font(.caption)
                 .padding()
         }
