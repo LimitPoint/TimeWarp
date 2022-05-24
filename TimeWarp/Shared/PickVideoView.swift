@@ -24,9 +24,6 @@ struct PickVideoView: View {
         VStack {
             
             HStack {
-                Button(action: { showFileImporter = true }, label: {
-                    Label("Import", systemImage: "square.and.arrow.down")
-                })
                 
                 Button(action: { scaleVideoObservable.loadAndPlayURL(kDefaultURL) }, label: {
                     Label("Default", systemImage: "cube.fill")
@@ -40,7 +37,11 @@ struct PickVideoView: View {
                     Label("Music", systemImage: "music.note")
                 })
             }
+            .padding()
             
+            Button(action: { showFileImporter = true }, label: {
+                Label("Import", systemImage: "square.and.arrow.down")
+            })
             
             VideoPlayer(player: scaleVideoObservable.player)
                 .frame(minHeight: 300)

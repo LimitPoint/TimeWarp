@@ -417,7 +417,7 @@ class ScaleVideoObservable:ObservableObject {
                     self.progress = 0
                     self.isScaling = false
                     
-                    if let resultURL = resultURL, let scaleVideo = self.scaleVideo, scaleVideo.isCancelled == false, scaleVideo.outOfOrder == false {
+                    if let resultURL = resultURL, self.scaleVideo?.isCancelled == false, self.scaleVideo?.outOfOrder == false {
                         self.scaledVideoURL = resultURL
                         
                         if let scalingLUT = self.scaleVideo?.scalingLUT {
@@ -429,10 +429,10 @@ class ScaleVideoObservable:ObservableObject {
                         self.playScaled()
                     }
                     else {
-                        if let scaleVideo = self.scaleVideo, scaleVideo.isCancelled {
+                        if self.scaleVideo?.isCancelled == true {
                             self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Cancelled", message: "The operation was cancelled.")
                         }
-                        else if let scaleVideo = self.scaleVideo, scaleVideo.outOfOrder {
+                        else if self.scaleVideo?.outOfOrder == true {
                             self.alertInfo = AlertInfo(id: .scalingFailed, title: "Scaling Failed", message: "Scaling produced out of order presentation times.\n\nTry different settings for factor, modifer or frame rate.")
                         }
                         else {

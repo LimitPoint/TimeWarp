@@ -20,6 +20,7 @@ struct HeaderView: View {
                 .multilineTextAlignment(.center)
             Text("Select instantaneous time scaling function below.")
                 .multilineTextAlignment(.center)
+                .padding(2)
 #if os(macOS)
             Button("Go to Documents", action: { 
                 NSWorkspace.shared.open(scaleVideoObservable.documentsURL)
