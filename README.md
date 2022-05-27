@@ -66,28 +66,135 @@ Arguments:
 
 6. **completion: Closure** - A handler that is executed when the operation has completed to send a message of success or not.
 
-Example usage is provided in the code defining the integrator as definite integrals or, equivalently, using antiderivatives.
+The *ScaleVideoApp.swift* file contains sample code can be run in the `init()` method to exercise the method. 
 
-In *ScaleVideoApp.swift* try uncommenting the code below in `init()`. Run the app on the Mac and navigate to the apps Documents folder using the 'Go to Documents' button in the Mac app, or 'Go to Folder...' from the 'Go' menu in the Finder (The path to the generated videos appear in the Xcode log view). There you will find the generated video samples. 
+The samples generate files into the *Documents* folder.
 
-This `integralTests` series of examples uses integration of instantaneous scaling functions for the integrator:
+Run the app on the Mac and navigate to the Documents folder using the *Go to Documents* button, or use *Go to Folder...* from the *Go* menu in the Finder using the paths to the generated videos that will be printed in the Xcode log view. 
+
+The `integralTests` series of examples uses numerical integration of various instantaneous time scaling functions for the integrator:
 
 ```swift
 // iterate all tests:
 let _ = IntegralType.allCases.map({ integralTests(integralType: $0) })
 ```
 
-This `antiDerivativeTests` series of examples uses the antiderivative of instantaneous scaling functions for the integrator:
+The `antiDerivativeTests` series of examples uses the antiderivative of various instantaneous time scaling functions for the integrator:
 
 ```swift
 let _ = AntiDerivativeType.allCases.map({ antiDerivativeTests(antiDerivativeType: $0) })
 ```
 
-In the first example the integrator is the antiderivative s(t) = t/2. The derivative of s(t) = t/2 is the instantaneous scaling function s'(t) = 1/2 so time is locally scaled by 1/2 uniformly, and the resulting video plays uniformly at 2x the normal rate.
+#### Antiderivative Examples
 
-For s(t) = 2 * t, with instantaneous scaling function s'(t) = 2, time is locally doubled uniformly, and then the rate of play of the scaled video is 1/2 the original rate of play. 
+Since the app code described above is itself an example of using numerical integration to compute time scaling only antiderivative examples are given here.
 
-For s(t) = t * t/2, with instantaneous scaling function s'(t) = t, time is locally scaled at a variable rate `t` from 0 to 1, and the video rate varies from fast to normal play.
+Three different time scaling functions are defined by their antiderivatives:
+
+```swift
+enum AntiDerivativeType: CaseIterable {
+    case constantDoubleRate
+    case constantHalfRate
+    case variableRate
+}
+
+func antiDerivativeTests(antiDerivativeType:AntiDerivativeType) {
+    
+    var filename:String
+    
+    switch antiDerivativeType {
+        case .constantDoubleRate:
+            filename = "constantDoubleRate.mov"
+        case .constantHalfRate:
+            filename = "constantHalfRate.mov"
+        case .variableRate:
+            filename = "variableRate.mov"
+    }
+    
+    func antiDerivative(_ t:Double) -> Double {
+        
+        var value:Double
+        
+        switch antiDerivativeType {
+            case .constantDoubleRate:
+                value = t / 2
+            case .constantHalfRate:
+                value = 2 * t
+            case .variableRate:
+                value = t * t / 2
+        }
+        
+        return value
+    }
+    
+    let fm = FileManager.default
+    let docsurl = try! fm.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+    
+    let destinationPath = docsurl.appendingPathComponent(filename).path
+    let scaleVideo = ScaleVideo(path: kDefaultURL.path, frameRate: 30, destination: destinationPath, integrator: antiDerivative, progress: { p, _ in
+        print("p = \(p)")
+    }, completion: { result, error in
+        print("result = \(String(describing: result))")
+    })
+    
+    scaleVideo?.start()
+}
+```
+
+Run with:
+
+```swift
+let _ = AntiDerivativeType.allCases.map({ antiDerivativeTests(antiDerivativeType: $0) })
+```
+
+#### Example 1
+
+The integrator is the antiderivative: 
+
+s(t) = t/2
+
+The instantaneous time scaling function is: 
+
+s`(t) = 1/2
+
+In terms of integrals:
+
+ ∫ s'(t) dt = ∫ 1/2 dt = t/2
+
+So time is locally scaled by 1/2 uniformly and the resulting video **constantDoubleRate.mov** plays uniformly at double the original rate.
+
+#### Example 2
+
+The integrator is the antiderivative: 
+
+s(t) = 2 t
+
+The instantaneous time scaling function is: 
+
+s`(t) = 2
+
+In terms of integrals:
+
+ ∫ s'(t) dt = ∫ 2 dt = 2 t
+
+So time is locally scaled by 2 uniformly and the resulting scaled video **constantHalfRate.mov** plays uniformly at half the original rate.
+
+
+#### Example 3
+
+The integrator is the antiderivative: 
+
+s(t) = s(t) = t^2/2
+
+The instantaneous time scaling function is: 
+
+s'(t) = t
+
+In terms of integrals:
+
+ ∫ s'(t) dt = ∫ t dt = t^2/2
+
+So time is locally scaled at a variable rate `t` and the resulting scaled video **variableRate.mov** plays at a variable rate that starts fast and slows to end at normal speed.
 
 [App]: https://developer.apple.com/documentation/swiftui/app
 [ScaleVideo]: http://www.limit-point.com/blog/2022/scale-video/
