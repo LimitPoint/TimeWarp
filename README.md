@@ -87,7 +87,7 @@ let _ = AntiDerivativeType.allCases.map({ antiDerivativeTests(antiDerivativeType
 
 #### Antiderivative Examples
 
-Since the app code described above is itself an example of using numerical integration to compute time scaling only antiderivative examples are given here.
+Since the app code described in our [in-depth blog post](https://www.limit-point.com/blog/2022/time-warp) is itself an example of using numerical integration to compute time scaling only antiderivative examples are given here.
 
 Three different time scaling functions are defined by their antiderivatives:
 
