@@ -107,9 +107,8 @@ class ControlBlocks {
         self.size = size
     }
     
-    var currentControlIndex:Int = 0
     var lastScaledTime:Double = 0
-    var currentControlTime:Double = 0
+    var controlTime:Double = 0
     
     var audioIndex:Int = 0
     var controlIndex:Int = 0
@@ -154,9 +153,9 @@ class ControlBlocks {
             if scaledTime > lastScaledTime {
                 let timeRange = scaledTime - lastScaledTime
                 
-                currentControlTime = Double(currentControlIndex) / sampleRate
-                while currentControlTime >= lastScaledTime, currentControlTime < scaledTime {
-                    let fraction = (currentControlTime - lastScaledTime) / timeRange
+                controlTime = Double(controlIndex) / sampleRate
+                while controlTime >= lastScaledTime, controlTime < scaledTime {
+                    let fraction = (controlTime - lastScaledTime) / timeRange
                     
                     controlIndex += 1
                     
@@ -167,8 +166,7 @@ class ControlBlocks {
                         leftoverControls.append(Double(audioIndex-1) + fraction)
                     }
                     
-                    currentControlIndex += 1
-                    currentControlTime = Double(currentControlIndex) / sampleRate
+                    controlTime = Double(controlIndex) / sampleRate
                     
                     if scaleVideo.isCancelled { 
                         return nil 
