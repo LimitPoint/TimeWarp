@@ -109,61 +109,61 @@
       "size" : "1024x1024"
     },
     {
-      "filename" : "TimeWarp-16.jpg",
+      "filename" : "TimeWarp - 16.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "16x16"
     },
     {
-      "filename" : "TimeWarp-32.jpg",
+      "filename" : "TimeWarp - 32-1.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "16x16"
     },
     {
-      "filename" : "TimeWarp-33.jpg",
+      "filename" : "TimeWarp - 32.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "32x32"
     },
     {
-      "filename" : "TimeWarp-64.jpg",
+      "filename" : "TimeWarp - 64.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "32x32"
     },
     {
-      "filename" : "TimeWarp-128.jpg",
+      "filename" : "TimeWarp - 128.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "128x128"
     },
     {
-      "filename" : "TimeWarp-256.jpg",
+      "filename" : "TimeWarp - 256-1.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "128x128"
     },
     {
-      "filename" : "TimeWarp-257.jpg",
+      "filename" : "TimeWarp - 256.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "256x256"
     },
     {
-      "filename" : "TimeWarp-512.jpg",
+      "filename" : "TimeWarp - 512-1.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "256x256"
     },
     {
-      "filename" : "TimeWarp-513.jpg",
+      "filename" : "TimeWarp - 512.png",
       "idiom" : "mac",
       "scale" : "1x",
       "size" : "512x512"
     },
     {
-      "filename" : "TimeWarp-1025.jpg",
+      "filename" : "TimeWarp - 1024.png",
       "idiom" : "mac",
       "scale" : "2x",
       "size" : "512x512"
