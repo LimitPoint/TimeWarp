@@ -303,7 +303,6 @@ class ScaleVideoObservable:ObservableObject {
         switch scalingType {
             case .doubleSmoothstep:
                 let c = 1/4.0
-                //let w = c * min(self.modifier, 0.99)
                 let w = c * self.modifier
                 value = integrate_double_smoothstep(t, from: 1, to: self.factor, range: c-w...c+w)
             case .triangle:
