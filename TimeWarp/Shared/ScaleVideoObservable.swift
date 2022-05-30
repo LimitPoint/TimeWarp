@@ -303,11 +303,12 @@ class ScaleVideoObservable:ObservableObject {
         switch scalingType {
             case .doubleSmoothstep:
                 let c = 1/4.0
-                let w = c * min(self.modifier, 0.99)
+                //let w = c * min(self.modifier, 0.99)
+                let w = c * self.modifier
                 value = integrate_double_smoothstep(t, from: 1, to: self.factor, range: c-w...c+w)
             case .triangle:
                 let c = 1/2.0
-                let w = c * min(self.modifier, 0.99)
+                let w = c * self.modifier
                 value = integrate_triangle(t, from: 1, to: self.factor, range: c-w...c+w)
             case .cosine:
                 value = integrate(t, integrand: { t in 
@@ -541,11 +542,11 @@ class ScaleVideoObservable:ObservableObject {
         switch scalingType {
             case .doubleSmoothstep:
                 let c = 1/4.0
-                let w = c * min(self.modifier, 0.99)
+                let w = c * self.modifier
                 scalingFunction = {t in double_smoothstep(t, from: 1, to: self.factor, range: c-w...c+w) }
             case .triangle:
                 let c = 1/2.0
-                let w = c * min(self.modifier, 0.99)
+                let w = c * self.modifier
                 scalingFunction = {t in triangle(t, from: 1, to: self.factor, range: c-w...c+w) }
             case .cosine:
                 scalingFunction = {t in cosine(t, factor: self.factor, modifier: self.modifier) }

@@ -85,7 +85,7 @@ func smoothstep_flip_centered_on(_ c:Double, _ w:Double, _ x:Double) -> Double {
     
 func double_smoothstep(_ t:Double, from:Double = 1, to:Double = 2, range:ClosedRange<Double> = 0.2...0.4) -> Double {
     
-    guard from > 0, to > 0, range.lowerBound > 0, range.upperBound < 0.5 else {
+    guard from > 0, to > 0, range.lowerBound >= 0, range.upperBound <= 0.5 else {
         return 0
     }
     
@@ -118,7 +118,7 @@ func double_smoothstep(_ t:Double, from:Double = 1, to:Double = 2, range:ClosedR
 
 func triangle(_ t:Double, from:Double = 1, to:Double = 2, range:ClosedRange<Double> = 0.2...0.8) -> Double {
     
-    guard from > 0, to > 0, range.lowerBound > 0, range.upperBound < 1 else {
+    guard from > 0, to > 0, range.lowerBound >= 0, range.upperBound <= 1 else {
         return 0
     }
     
@@ -205,7 +205,7 @@ func integrate(_ r:ClosedRange<Double>, integrand:(Double)->Double) -> Double? {
 
 func integrate_double_smoothstep(_ t:Double, from:Double = 1, to:Double = 2, range:ClosedRange<Double> = 0.2...0.4) -> Double? {
     
-    guard from > 0, to > 0, range.lowerBound > 0, range.upperBound < 0.5 else {
+    guard from > 0, to > 0, range.lowerBound >= 0, range.upperBound <= 0.5 else {
         return nil
     }
     
@@ -280,7 +280,7 @@ func integrate_double_smoothstep(_ t:Double, from:Double = 1, to:Double = 2, ran
 
 func integrate_triangle(_ t:Double, from:Double = 1, to:Double = 2, range:ClosedRange<Double> = 0.2...0.8) -> Double? {
     
-    guard from > 0, to > 0, range.lowerBound > 0, range.upperBound < 1 else {
+    guard from > 0, to > 0, range.lowerBound >= 0, range.upperBound <= 1 else {
         return 0
     }
     
