@@ -333,26 +333,30 @@ class ScaleVideoObservable:ObservableObject {
     func printDurations(_ resultURL:URL) {
         let assetresult = AVAsset(url: resultURL)
         
+        let scale = integrator(1)
+        
         if let videoTrack = assetresult.tracks(withMediaType: .video).first {
-            let videoTrackDuration = CMTimeGetSeconds(videoTrack.timeRange.duration)
+            let videoTrackDuration = videoTrack.timeRange.duration.seconds
             print("scaled video duration = \(videoTrackDuration)")
         }
         
         if let audioTrack = assetresult.tracks(withMediaType: .audio).first {
-            let audioTrackDuration = CMTimeGetSeconds(audioTrack.timeRange.duration)
+            let audioTrackDuration = audioTrack.timeRange.duration.seconds
             print("scaled audio duration = \(audioTrackDuration)")
         }
         
         let assetinput = AVAsset(url: self.videoURL)
         
         if let videoTrack = assetinput.tracks(withMediaType: .video).first {
-            let videoTrackDuration = CMTimeGetSeconds(videoTrack.timeRange.duration)
+            let videoTrackDuration = videoTrack.timeRange.duration.seconds
             print("original video duration = \(videoTrackDuration)")
+            print("original video duration * scale = \(videoTrackDuration * scale)")
         }
         
         if let audioTrack = assetinput.tracks(withMediaType: .audio).first {
-            let audioTrackDuration = CMTimeGetSeconds(audioTrack.timeRange.duration)
+            let audioTrackDuration = audioTrack.timeRange.duration.seconds
             print("original audio duration  = \(audioTrackDuration)")
+            print("original audio duration * scale  = \(audioTrackDuration * scale)")
         }
     }
     
