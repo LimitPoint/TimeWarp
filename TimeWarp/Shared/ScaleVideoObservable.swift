@@ -456,13 +456,14 @@ class ScaleVideoObservable:ObservableObject {
         self.scaleVideo?.isCancelled = true
     }
     
-    func prepareToExportScaledVideo() {
+    func prepareToExportScaledVideo() -> Bool {
         guard let url = self.scaledVideoURL else {
             self.alertInfo = AlertInfo(id: .noScaledVideoURL, title: "No Scaled Video", message: "Time scale a video and try again.")
-            return
+            return false
         }
         self.player.pause() // export alert can't be dismissed while video is playing.
         videoDocument = VideoDocument(url: url)
+        return true
     }
     
     func secondsToString(secondsIn:Double) -> String {

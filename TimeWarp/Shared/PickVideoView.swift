@@ -57,7 +57,11 @@ struct PickVideoView: View {
                     Label("Scaled", systemImage: "play.circle.fill")
                 })
                 
-                Button(action: { scaleVideoObservable.prepareToExportScaledVideo(); showFileExporter = true }, label: {
+                Button(action: { 
+                    if scaleVideoObservable.prepareToExportScaledVideo() {
+                        showFileExporter = true 
+                    }
+                }, label: {
                     Label("Export", systemImage: "square.and.arrow.up.fill")
                 })
             }
