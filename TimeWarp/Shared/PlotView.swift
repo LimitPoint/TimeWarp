@@ -2,6 +2,9 @@
 //  PlotView.swift
 //  ScaleVideo
 //
+//  Read discussion at:
+//  http://www.limit-point.com/blog/2022/time-warp/
+//
 //  Created by Joseph Pagliaro on 5/1/22.
 //  Copyright © 2022 Limit Point LLC. All rights reserved.
 //
