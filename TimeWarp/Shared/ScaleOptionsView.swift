@@ -45,13 +45,13 @@ struct FactorView: View {
             
             Slider(
                 value: $scaleVideoObservable.factor,
-                in: 0.1...2
+                in: 0.1...4
             ) {
                 Text("Factor")
             } minimumValueLabel: {
                 Text("0.1")
             } maximumValueLabel: {
-                Text("2")
+                Text("4")
             } onEditingChanged: { editing in
                 isEditing = editing
             }
