@@ -1,4 +1,4 @@
-![TimeWarp](http://www.limit-point.com/assets/images/TimeWarp.jpg)
+![TimeWarp](https://www.limit-point.com/assets/images/TimeWarp.jpg)
 # TimeWarp
 ## Variably scales video in time domain
 
@@ -197,7 +197,7 @@ In terms of integrals:
 So time is locally scaled at a variable rate `t` and the resulting scaled video **variableRate.mov** plays at a variable rate that starts fast and slows to end at normal speed.
 
 [App]: https://developer.apple.com/documentation/swiftui/app
-[ScaleVideo]: http://www.limit-point.com/blog/2022/scale-video/
+[ScaleVideo]: https://www.limit-point.com/blog/2022/scale-video/
 [ObservableObject]: https://developer.apple.com/documentation/combine/observableobject
 [AVFoundation]: https://developer.apple.com/documentation/avfoundation/
 [vDSP]: https://developer.apple.com/documentation/accelerate/vdsp
