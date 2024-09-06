@@ -84,7 +84,8 @@ class ScaleVideoObservable:ObservableObject {
     
     var errorMesssage:String?
     
-    @Published var player:AVPlayer
+    @Published var playerItem:AVPlayerItem
+    var player:AVPlayer
     var currentPlayerDuration:Double?
     @Published var currentPlayerTime:Double?
     
@@ -92,7 +93,7 @@ class ScaleVideoObservable:ObservableObject {
         
         videoURL = kDefaultURL
         videoDuration = AVAsset(url: videoURL).duration.seconds
-        
+        playerItem = AVPlayerItem(url: videoURL)
         player = AVPlayer(url: videoURL)
         
         documentsURL = try! FileManager.default.url(for:.documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -150,7 +151,7 @@ class ScaleVideoObservable:ObservableObject {
         }
         .store(in: &cancelBag)
         
-        $player.sink { _ in
+        $playerItem.sink { _ in
             DispatchQueue.main.async {
                 self.updateExpectedScaledDuration()
             }
@@ -274,7 +275,7 @@ class ScaleVideoObservable:ObservableObject {
         }
         
         self.player.pause()
-        let playerItem = AVPlayerItem(url: url)
+        self.playerItem = AVPlayerItem(url: url)
         self.player.replaceCurrentItem(with: playerItem)
         
         self.currentPlayerDuration = AVAsset(url: url).duration.seconds
