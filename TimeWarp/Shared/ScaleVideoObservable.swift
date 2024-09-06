@@ -274,7 +274,8 @@ class ScaleVideoObservable:ObservableObject {
         }
         
         self.player.pause()
-        self.player = AVPlayer(url: url)
+        let playerItem = AVPlayerItem(url: url)
+        self.player.replaceCurrentItem(with: playerItem)
         
         self.currentPlayerDuration = AVAsset(url: url).duration.seconds
         periodicTimeObserver = self.player.addPeriodicTimeObserver(forInterval: CMTime(value: 1, timescale: 30), queue: nil) { [weak self] cmTime in
