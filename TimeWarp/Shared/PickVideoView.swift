@@ -49,7 +49,10 @@ struct PickVideoView: View {
             VideoPlayer(player: scaleVideoObservable.player)
                 .frame(minHeight: 300)
             
-            Text(scaleVideoObservable.videoURL.lastPathComponent)
+            if let urlAsset = scaleVideoObservable.player.currentItem?.asset as? AVURLAsset {
+                let url = urlAsset.url
+                Text(url.lastPathComponent)
+            }
             
             HStack {
                 Button(action: { scaleVideoObservable.playOriginal() }, label: {
